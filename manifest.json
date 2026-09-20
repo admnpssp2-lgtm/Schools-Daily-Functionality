@@ -1,0 +1,11 @@
+{
+  "name": "Schools Daily Functionality",
+  "short_name": "School Functionality",
+  "description": "PEF / PEIMA Schools Daily Functionality Monitoring System",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f3f6f5",
+  "theme_color": "#0b7a5c"
+}
