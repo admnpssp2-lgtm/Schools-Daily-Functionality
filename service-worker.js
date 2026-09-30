@@ -1,192 +1,190 @@
-const CACHE_NAME =
-  "schools-daily-functionality-v1";
+const CACHE_NAME = "schools-daily-functionality-v2";
 
-
-const APP_FILES = [
-
+const FILES_TO_CACHE = [
   "./",
-
   "./index.html",
-
   "./manifest.json",
-
   "./service-worker.js"
-
 ];
 
 
-/* =====================================================
+/* ============================================================
    INSTALL
-===================================================== */
+   ============================================================ */
 
-self.addEventListener(
-  "install",
-  function(event) {
+self.addEventListener("install", event => {
 
-    event.waitUntil(
+  event.waitUntil(
 
-      caches
-        .open(
-          CACHE_NAME
-        )
-        .then(
-          function(cache) {
+    caches.open(CACHE_NAME)
+      .then(cache => {
 
-            return cache.addAll(
-              APP_FILES
-            );
+        return cache.addAll(
+          FILES_TO_CACHE
+        );
 
-          }
-        )
+      })
 
-    );
+  );
+
+  self.skipWaiting();
+
+});
 
 
-    self.skipWaiting();
-
-  }
-);
-
-
-/* =====================================================
+/* ============================================================
    ACTIVATE
-===================================================== */
+   ============================================================ */
 
-self.addEventListener(
-  "activate",
-  function(event) {
+self.addEventListener("activate", event => {
 
-    event.waitUntil(
+  event.waitUntil(
 
-      caches
-        .keys()
-        .then(
-          function(cacheNames) {
+    caches.keys()
+      .then(cacheNames => {
 
-            return Promise.all(
+        return Promise.all(
 
-              cacheNames
-                .filter(
-                  function(cacheName) {
+          cacheNames
+            .filter(
+              cacheName =>
+                cacheName !== CACHE_NAME
+            )
+            .map(
+              cacheName =>
+                caches.delete(cacheName)
+            )
 
-                    return (
-                      cacheName !==
-                      CACHE_NAME
-                    );
+        );
 
-                  }
-                )
-                .map(
-                  function(cacheName) {
+      })
 
-                    return caches.delete(
-                      cacheName
-                    );
+  );
 
-                  }
-                )
+  self.clients.claim();
 
-            );
-
-          }
-        )
-
-    );
+});
 
 
-    self.clients.claim();
+/* ============================================================
+   FETCH
+   ============================================================ */
+
+self.addEventListener("fetch", event => {
+
+  /*
+   * POST requests ko Service Worker cache nahi karega.
+   * Apps Script API request directly server par jayegi.
+   */
+
+  if (
+    event.request.method !== "GET"
+  ) {
+
+    return;
 
   }
-);
 
 
-/* =====================================================
-   FETCH
-===================================================== */
+  event.respondWith(
 
-self.addEventListener(
-  "fetch",
-  function(event) {
+    caches.match(event.request)
+      .then(cachedResponse => {
+
+        /*
+         * Agar cache mein file available hai
+         * to pehle cache response.
+         */
+
+        if (cachedResponse) {
+
+          /*
+           * Saath background mein latest version
+           * network se update karne ki koshish.
+           */
+
+          fetch(event.request)
+            .then(networkResponse => {
+
+              if (
+                networkResponse &&
+                networkResponse.ok
+              ) {
+
+                caches.open(
+                  CACHE_NAME
+                ).then(cache => {
+
+                  cache.put(
+                    event.request,
+                    networkResponse.clone()
+                  );
+
+                });
+
+              }
+
+            })
+            .catch(() => {
+              /*
+               * Offline hai to kuch nahi karna.
+               */
+            });
 
 
-    /*
-      POST requests such as
-      Apps Script submissions
-      must go directly to server.
-    */
+          return cachedResponse;
 
-    if (
-      event.request.method !==
-      "GET"
-    ) {
-
-      return;
-
-    }
+        }
 
 
-    event.respondWith(
+        /*
+         * Cache mein nahi hai to network se load.
+         */
 
-      caches
-        .match(
-          event.request
-        )
-        .then(
-          function(cachedResponse) {
-
+        return fetch(event.request)
+          .then(networkResponse => {
 
             if (
-              cachedResponse
+              networkResponse &&
+              networkResponse.ok
             ) {
 
-              return cachedResponse;
+              const responseClone =
+                networkResponse.clone();
+
+
+              caches.open(
+                CACHE_NAME
+              ).then(cache => {
+
+                cache.put(
+                  event.request,
+                  responseClone
+                );
+
+              });
 
             }
 
 
-            return fetch(
-              event.request
-            )
-            .then(
-              function(networkResponse) {
+            return networkResponse;
 
+          })
+          .catch(() => {
 
-                if (
-                  networkResponse &&
-                  networkResponse.status === 200
-                ) {
+            /*
+             * Agar offline ho aur page cache mein
+             * available ho to index.html return.
+             */
 
-                  const responseClone =
-                    networkResponse.clone();
-
-
-                  caches
-                    .open(
-                      CACHE_NAME
-                    )
-                    .then(
-                      function(cache) {
-
-                        cache.put(
-                          event.request,
-                          responseClone
-                        );
-
-                      }
-                    );
-
-                }
-
-
-                return networkResponse;
-
-              }
+            return caches.match(
+              "./index.html"
             );
 
-          }
-        )
+          });
 
-    );
+      })
 
-  }
-);
+  );
+
+});
