@@ -8,7 +8,11 @@
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0">
 
-  <meta name="theme-color" content="#0b7a5c">
+  <meta name="theme-color"
+        content="#0b7a5c">
+
+  <meta name="description"
+        content="PEF / PEIMA Schools Daily Functionality Monitoring System">
 
   <title>Schools Daily Functionality</title>
 
@@ -207,24 +211,6 @@
       font-size: 13px;
     }
 
-    .loader {
-      display: inline-block;
-      width: 14px;
-      height: 14px;
-      border: 2px solid #ddd;
-      border-top: 2px solid #0b7a5c;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      vertical-align: middle;
-      margin-right: 5px;
-    }
-
-    @keyframes spin {
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-
     .small-note {
       font-size: 12px;
       color: #666;
@@ -250,25 +236,21 @@
 
   <div class="container">
 
-    <!-- NETWORK STATUS -->
-
     <div id="networkStatus"
          class="status-box online">
       Checking Internet...
     </div>
 
 
-    <!-- PENDING -->
-
     <div id="pendingBox"
          class="pending-box"
          style="display:none;">
+
       Pending Uploads:
       <span id="pendingCount">0</span>
+
     </div>
 
-
-    <!-- SCHOOL INFORMATION -->
 
     <div class="card">
 
@@ -282,7 +264,9 @@
       </label>
 
       <select id="cluster">
-        <option value="">Loading Clusters...</option>
+        <option value="">
+          Loading Clusters...
+        </option>
       </select>
 
 
@@ -318,12 +302,16 @@
 
         <div id="gpsStatus"
              class="gps-status">
+
           Getting location...
+
         </div>
 
         <div id="gpsData"
              class="gps-data">
+
           Please allow location access.
+
         </div>
 
       </div>
@@ -331,8 +319,6 @@
     </div>
 
 
-
-    <!-- PHOTO SECTION -->
 
     <div class="card">
 
@@ -352,10 +338,6 @@
                accept="image/*"
                capture="environment">
 
-        <div class="photo-note">
-          Camera se fresh photo lena zaroori hai.
-        </div>
-
       </div>
 
 
@@ -370,17 +352,11 @@
                accept="image/*"
                capture="environment">
 
-        <div class="photo-note">
-          Camera se fresh photo lena zaroori hai.
-        </div>
-
       </div>
 
     </div>
 
 
-
-    <!-- ACTIONS -->
 
     <div class="card">
 
@@ -418,20 +394,6 @@
 
       </button>
 
-
-      <div class="small-note">
-
-        <b>Submit:</b>
-        Internet available ho to data directly server par submit hoga.
-
-        <br><br>
-
-        <b>Draft:</b>
-        Sirf jab aap manually Save Draft press karein ya device offline ho,
-        data local draft mein save hoga.
-
-      </div>
-
     </div>
 
   </div>
@@ -444,7 +406,6 @@
 /* ============================================================
    CONFIGURATION
    ============================================================ */
-
 
 const API_URL =
   "https://script.google.com/macros/s/AKfycbwxsV6ZkY2usbNs1Q9gqkxaJivNGgdkzLJNIW4Nynq3XXa1XwgF3P6CU4fCqnT6rN0SuQ/exec";
@@ -461,17 +422,17 @@ const DB_VERSION = 1;
    GLOBAL VARIABLES
    ============================================================ */
 
-
 let db = null;
 
 let masterData = [];
 
 let currentLatitude = null;
+
 let currentLongitude = null;
+
 let currentAccuracy = null;
 
 let gpsWatchId = null;
-let gpsRetryTimer = null;
 
 let deferredInstallPrompt = null;
 
@@ -480,56 +441,75 @@ let deferredInstallPrompt = null;
    INDEXED DB
    ============================================================ */
 
-
 function openDB() {
 
   return new Promise((resolve, reject) => {
 
     const request =
-      indexedDB.open(DB_NAME, DB_VERSION);
+      indexedDB.open(
+        DB_NAME,
+        DB_VERSION
+      );
 
 
-    request.onupgradeneeded = function(event) {
+    request.onupgradeneeded =
+      function(event) {
 
-      const database = event.target.result;
+        const database =
+          event.target.result;
 
 
-      if (!database.objectStoreNames.contains("master")) {
+        if (
+          !database.objectStoreNames
+            .contains("master")
+        ) {
 
-        database.createObjectStore(
-          "master",
-          { keyPath: "id" }
+          database.createObjectStore(
+            "master",
+            {
+              keyPath: "id"
+            }
+          );
+
+        }
+
+
+        if (
+          !database.objectStoreNames
+            .contains("drafts")
+        ) {
+
+          database.createObjectStore(
+            "drafts",
+            {
+              keyPath: "submissionId"
+            }
+          );
+
+        }
+
+      };
+
+
+    request.onsuccess =
+      function(event) {
+
+        db =
+          event.target.result;
+
+        resolve(db);
+
+      };
+
+
+    request.onerror =
+      function() {
+
+        reject(
+          request.error
         );
 
-      }
-
-
-      if (!database.objectStoreNames.contains("drafts")) {
-
-        database.createObjectStore(
-          "drafts",
-          { keyPath: "submissionId" }
-        );
-
-      }
-
-    };
-
-
-    request.onsuccess = function(event) {
-
-      db = event.target.result;
-
-      resolve(db);
-
-    };
-
-
-    request.onerror = function() {
-
-      reject(request.error);
-
-    };
+      };
 
   });
 
@@ -538,203 +518,272 @@ function openDB() {
 
 
 /* ============================================================
-   MASTER DATA - SAVE
+   MASTER DATA SAVE
    ============================================================ */
-
 
 function saveMasterData(data) {
 
-  return new Promise((resolve, reject) => {
+  return new Promise(
+    (resolve, reject) => {
 
-    if (!db) {
-      reject("Database not ready");
-      return;
+      if (!db) {
+
+        reject(
+          new Error(
+            "Database not ready."
+          )
+        );
+
+        return;
+
+      }
+
+
+      const tx =
+        db.transaction(
+          "master",
+          "readwrite"
+        );
+
+
+      const store =
+        tx.objectStore(
+          "master"
+        );
+
+
+      store.clear();
+
+
+      data.forEach(
+        (item, index) => {
+
+          store.put({
+
+            id: index + 1,
+
+            cluster: item.cluster,
+
+            school: item.school,
+
+            emis: item.emis
+
+          });
+
+        }
+      );
+
+
+      tx.oncomplete =
+        () => resolve();
+
+
+      tx.onerror =
+        () => reject(
+          tx.error
+        );
+
     }
-
-
-    const tx =
-      db.transaction("master", "readwrite");
-
-
-    const store =
-      tx.objectStore("master");
-
-
-    store.clear();
-
-
-    data.forEach((item, index) => {
-
-      store.put({
-        id: index + 1,
-        cluster: item.cluster,
-        school: item.school,
-        emis: item.emis
-      });
-
-    });
-
-
-    tx.oncomplete = () => resolve();
-
-    tx.onerror = () => reject(tx.error);
-
-  });
+  );
 
 }
 
 
 
 /* ============================================================
-   MASTER DATA - READ
+   MASTER DATA READ
    ============================================================ */
-
 
 function getLocalMasterData() {
 
-  return new Promise((resolve, reject) => {
+  return new Promise(
+    (resolve, reject) => {
 
-    if (!db) {
-      resolve([]);
-      return;
+      if (!db) {
+
+        resolve([]);
+
+        return;
+
+      }
+
+
+      const tx =
+        db.transaction(
+          "master",
+          "readonly"
+        );
+
+
+      const store =
+        tx.objectStore(
+          "master"
+        );
+
+
+      const request =
+        store.getAll();
+
+
+      request.onsuccess =
+        function() {
+
+          resolve(
+            request.result || []
+          );
+
+        };
+
+
+      request.onerror =
+        function() {
+
+          reject(
+            request.error
+          );
+
+        };
+
     }
-
-
-    const tx =
-      db.transaction("master", "readonly");
-
-
-    const store =
-      tx.objectStore("master");
-
-
-    const request =
-      store.getAll();
-
-
-    request.onsuccess = function() {
-
-      resolve(request.result || []);
-
-    };
-
-
-    request.onerror = function() {
-
-      reject(request.error);
-
-    };
-
-  });
+  );
 
 }
 
 
 
 /* ============================================================
-   DRAFT - SAVE
+   SAVE DRAFT
    ============================================================ */
-
 
 function saveDraftToDB(data) {
 
-  return new Promise((resolve, reject) => {
+  return new Promise(
+    (resolve, reject) => {
 
-    const tx =
-      db.transaction("drafts", "readwrite");
-
-
-    const store =
-      tx.objectStore("drafts");
-
-
-    store.put(data);
+      const tx =
+        db.transaction(
+          "drafts",
+          "readwrite"
+        );
 
 
-    tx.oncomplete = function() {
+      const store =
+        tx.objectStore(
+          "drafts"
+        );
 
-      resolve();
 
-    };
+      store.put(data);
 
 
-    tx.onerror = function() {
+      tx.oncomplete =
+        () => resolve();
 
-      reject(tx.error);
 
-    };
+      tx.onerror =
+        () => reject(
+          tx.error
+        );
 
-  });
+    }
+  );
 
 }
 
 
 
 /* ============================================================
-   DRAFT - GET ALL
+   GET DRAFTS
    ============================================================ */
-
 
 function getDrafts() {
 
-  return new Promise((resolve, reject) => {
+  return new Promise(
+    (resolve, reject) => {
 
-    const tx =
-      db.transaction("drafts", "readonly");
-
-
-    const store =
-      tx.objectStore("drafts");
-
-
-    const request =
-      store.getAll();
+      const tx =
+        db.transaction(
+          "drafts",
+          "readonly"
+        );
 
 
-    request.onsuccess = function() {
+      const store =
+        tx.objectStore(
+          "drafts"
+        );
 
-      resolve(request.result || []);
 
-    };
+      const request =
+        store.getAll();
 
 
-    request.onerror = function() {
+      request.onsuccess =
+        function() {
 
-      reject(request.error);
+          resolve(
+            request.result || []
+          );
 
-    };
+        };
 
-  });
+
+      request.onerror =
+        function() {
+
+          reject(
+            request.error
+          );
+
+        };
+
+    }
+  );
 
 }
 
 
 
 /* ============================================================
-   DRAFT - DELETE
+   DELETE DRAFT
    ============================================================ */
 
+function deleteDraft(
+  submissionId
+) {
 
-function deleteDraft(submissionId) {
+  return new Promise(
+    (resolve, reject) => {
 
-  return new Promise((resolve, reject) => {
-
-    const tx =
-      db.transaction("drafts", "readwrite");
-
-
-    const store =
-      tx.objectStore("drafts");
-
-
-    store.delete(submissionId);
+      const tx =
+        db.transaction(
+          "drafts",
+          "readwrite"
+        );
 
 
-    tx.oncomplete = () => resolve();
+      const store =
+        tx.objectStore(
+          "drafts"
+        );
 
-    tx.onerror = () => reject(tx.error);
 
-  });
+      store.delete(
+        submissionId
+      );
+
+
+      tx.oncomplete =
+        () => resolve();
+
+
+      tx.onerror =
+        () => reject(
+          tx.error
+        );
+
+    }
+  );
 
 }
 
@@ -744,27 +793,34 @@ function deleteDraft(submissionId) {
    API REQUEST
    ============================================================ */
 
+async function apiRequest(
+  action,
+  payload = {}
+) {
 
-async function apiRequest(action, payload = {}) {
+  const response =
+    await fetch(
+      API_URL,
+      {
 
-  const response = await fetch(API_URL, {
+        method: "POST",
 
-    method: "POST",
+        headers: {
+          "Content-Type":
+            "text/plain;charset=utf-8"
+        },
 
-    headers: {
-      "Content-Type":
-        "text/plain;charset=utf-8"
-    },
+        body:
+          JSON.stringify({
 
-    body: JSON.stringify({
+            action: action,
 
-      action: action,
+            ...payload
 
-      ...payload
+          })
 
-    })
-
-  });
+      }
+    );
 
 
   if (!response.ok) {
@@ -786,7 +842,8 @@ async function apiRequest(action, payload = {}) {
 
   try {
 
-    result = JSON.parse(text);
+    result =
+      JSON.parse(text);
 
   } catch (error) {
 
@@ -801,7 +858,7 @@ async function apiRequest(action, payload = {}) {
 
     throw new Error(
       result.error ||
-      "Server rejected the request."
+      "Server rejected request."
     );
 
   }
@@ -814,9 +871,8 @@ async function apiRequest(action, payload = {}) {
 
 
 /* ============================================================
-   API REQUEST WITH RETRY
+   API RETRY
    ============================================================ */
-
 
 async function apiRequestWithRetry(
   action,
@@ -842,7 +898,8 @@ async function apiRequestWithRetry(
 
     } catch (error) {
 
-      lastError = error;
+      lastError =
+        error;
 
 
       console.error(
@@ -879,10 +936,12 @@ async function apiRequestWithRetry(
   }
 
 
-  throw lastError ||
+  throw (
+    lastError ||
     new Error(
       "Server connection failed."
-    );
+    )
+  );
 
 }
 
@@ -891,7 +950,6 @@ async function apiRequestWithRetry(
 /* ============================================================
    LOAD MASTER DATA
    ============================================================ */
-
 
 async function loadMasterData() {
 
@@ -902,24 +960,29 @@ async function loadMasterData() {
 
 
     if (
-      local &&
       local.length > 0
     ) {
 
       masterData =
-        local.map(item => ({
+        local.map(
+          item => ({
 
-          cluster: item.cluster,
-          school: item.school,
-          emis: item.emis
+            cluster:
+              item.cluster,
 
-        }));
+            school:
+              item.school,
+
+            emis:
+              item.emis
+
+          })
+        );
 
 
       populateClusters();
 
     }
-
 
   } catch (error) {
 
@@ -934,21 +997,9 @@ async function loadMasterData() {
 
   if (!navigator.onLine) {
 
-    if (
-      masterData.length === 0
-    ) {
-
-      document.getElementById(
-        "cluster"
-      ).innerHTML =
-        '<option value="">Offline - No School Data</option>';
-
-    }
-
     return;
 
   }
-
 
 
   try {
@@ -964,7 +1015,8 @@ async function loadMasterData() {
       data.length > 0
     ) {
 
-      masterData = data;
+      masterData =
+        data;
 
 
       await saveMasterData(
@@ -979,21 +1031,9 @@ async function loadMasterData() {
   } catch (error) {
 
     console.error(
-      "Master data server error:",
+      "Master data error:",
       error
     );
-
-
-    if (
-      masterData.length === 0
-    ) {
-
-      document.getElementById(
-        "cluster"
-      ).innerHTML =
-        '<option value="">Server unavailable</option>';
-
-    }
 
   }
 
@@ -1002,13 +1042,12 @@ async function loadMasterData() {
 
 
 /* ============================================================
-   POPULATE CLUSTERS
+   CLUSTERS
    ============================================================ */
-
 
 function populateClusters() {
 
-  const clusterSelect =
+  const select =
     document.getElementById(
       "cluster"
     );
@@ -1017,40 +1056,48 @@ function populateClusters() {
   const clusters =
     [
       ...new Set(
+
         masterData
-          .map(item =>
-            String(
-              item.cluster || ""
-            ).trim()
+          .map(
+            item =>
+              String(
+                item.cluster || ""
+              ).trim()
           )
           .filter(Boolean)
+
       )
     ]
     .sort();
 
 
-  clusterSelect.innerHTML =
+  select.innerHTML =
     '<option value="">Select Cluster</option>';
 
 
-  clusters.forEach(cluster => {
+  clusters.forEach(
+    cluster => {
 
-    const option =
-      document.createElement(
-        "option"
+      const option =
+        document.createElement(
+          "option"
+        );
+
+
+      option.value =
+        cluster;
+
+
+      option.textContent =
+        cluster;
+
+
+      select.appendChild(
+        option
       );
 
-
-    option.value = cluster;
-
-    option.textContent = cluster;
-
-
-    clusterSelect.appendChild(
-      option
-    );
-
-  });
+    }
+  );
 
 
   document.getElementById(
@@ -1071,14 +1118,13 @@ function populateClusters() {
    CLUSTER CHANGE
    ============================================================ */
 
-
 document.getElementById(
   "cluster"
 ).addEventListener(
   "change",
   function() {
 
-    const selectedCluster =
+    const cluster =
       this.value;
 
 
@@ -1088,7 +1134,7 @@ document.getElementById(
       );
 
 
-    const emisInput =
+    const emis =
       document.getElementById(
         "emis"
       );
@@ -1098,10 +1144,10 @@ document.getElementById(
       '<option value="">Select School</option>';
 
 
-    emisInput.value = "";
+    emis.value = "";
 
 
-    if (!selectedCluster) {
+    if (!cluster) {
 
       schoolSelect.disabled =
         true;
@@ -1113,45 +1159,49 @@ document.getElementById(
 
     const schools =
       masterData
-        .filter(item =>
-          String(
-            item.cluster || ""
-          ).trim() ===
-          selectedCluster
+        .filter(
+          item =>
+            String(
+              item.cluster || ""
+            ).trim() ===
+            cluster
         )
-        .sort((a, b) =>
-          String(a.school)
-            .localeCompare(
-              String(b.school)
-            )
+        .sort(
+          (a, b) =>
+            String(a.school)
+              .localeCompare(
+                String(b.school)
+              )
         );
 
 
-    schools.forEach(item => {
+    schools.forEach(
+      item => {
 
-      const option =
-        document.createElement(
-          "option"
+        const option =
+          document.createElement(
+            "option"
+          );
+
+
+        option.value =
+          item.school;
+
+
+        option.textContent =
+          item.school;
+
+
+        option.dataset.emis =
+          item.emis;
+
+
+        schoolSelect.appendChild(
+          option
         );
 
-
-      option.value =
-        item.school;
-
-
-      option.textContent =
-        item.school;
-
-
-      option.dataset.emis =
-        item.emis;
-
-
-      schoolSelect.appendChild(
-        option
-      );
-
-    });
+      }
+    );
 
 
     schoolSelect.disabled =
@@ -1166,27 +1216,23 @@ document.getElementById(
    SCHOOL CHANGE
    ============================================================ */
 
-
 document.getElementById(
   "school"
 ).addEventListener(
   "change",
   function() {
 
-    const selectedOption =
+    const option =
       this.options[
         this.selectedIndex
       ];
 
 
-    const emis =
-      selectedOption?.dataset
-        ?.emis || "";
-
-
     document.getElementById(
       "emis"
-    ).value = emis;
+    ).value =
+      option?.dataset?.emis ||
+      "";
 
   }
 );
@@ -1194,9 +1240,8 @@ document.getElementById(
 
 
 /* ============================================================
-   GPS - SINGLE CAPTURE
+   GPS
    ============================================================ */
-
 
 function captureGPS() {
 
@@ -1245,6 +1290,7 @@ function captureGPS() {
 
 
           resolve({
+
             latitude:
               currentLatitude,
 
@@ -1253,6 +1299,7 @@ function captureGPS() {
 
             accuracy:
               currentAccuracy
+
           });
 
         },
@@ -1311,11 +1358,14 @@ function captureGPS() {
 
         {
 
-          enableHighAccuracy: true,
+          enableHighAccuracy:
+            true,
 
-          timeout: 45000,
+          timeout:
+            45000,
 
-          maximumAge: 0
+          maximumAge:
+            0
 
         }
 
@@ -1332,98 +1382,100 @@ function captureGPS() {
    GPS WATCH
    ============================================================ */
 
-
 function startGPSMonitoring() {
 
   if (
     !navigator.geolocation
   ) {
 
-    updateGPSStatus(
-      "GPS not supported."
-    );
-
     return;
 
   }
 
 
-  captureGPS().catch(
-    error =>
-      console.log(
-        "Initial GPS:",
-        error
-      )
-  );
+  captureGPS()
+    .catch(
+      error =>
+        console.log(
+          "Initial GPS:",
+          error
+        )
+    );
 
 
   if (
     gpsWatchId !== null
   ) {
 
-    navigator.geolocation.clearWatch(
-      gpsWatchId
-    );
+    navigator.geolocation
+      .clearWatch(
+        gpsWatchId
+      );
 
   }
 
 
   gpsWatchId =
-    navigator.geolocation.watchPosition(
+    navigator.geolocation
+      .watchPosition(
 
-      function(position) {
+        function(position) {
 
-        currentLatitude =
-          position.coords.latitude;
-
-
-        currentLongitude =
-          position.coords.longitude;
+          currentLatitude =
+            position.coords.latitude;
 
 
-        currentAccuracy =
-          position.coords.accuracy;
+          currentLongitude =
+            position.coords.longitude;
 
 
-        updateGPSStatus(
-          "Location Captured"
-        );
-
-      },
+          currentAccuracy =
+            position.coords.accuracy;
 
 
-      function(error) {
+          updateGPSStatus(
+            "Location Captured"
+          );
 
-        console.log(
-          "GPS watch error:",
-          error
-        );
-
-      },
+        },
 
 
-      {
+        function(error) {
 
-        enableHighAccuracy: true,
+          console.log(
+            "GPS watch error:",
+            error
+          );
 
-        timeout: 45000,
+        },
 
-        maximumAge: 10000
 
-      }
+        {
 
-    );
+          enableHighAccuracy:
+            true,
+
+          timeout:
+            45000,
+
+          maximumAge:
+            10000
+
+        }
+
+      );
 
 }
 
 
 
 /* ============================================================
-   GPS UI
+   GPS DISPLAY
    ============================================================ */
 
-
-function updateGPSStatus(message) {
+function updateGPSStatus(
+  message
+) {
 
   const status =
     document.getElementById(
@@ -1459,11 +1511,13 @@ function updateGPSStatus(message) {
       "<br>" +
 
       "Accuracy: " +
+
       (
         currentAccuracy !== null
           ? currentAccuracy.toFixed(1)
           : "N/A"
       ) +
+
       " meters";
 
   } else {
@@ -1481,7 +1535,6 @@ function updateGPSStatus(message) {
    FILE TO DATA URL
    ============================================================ */
 
-
 function fileToDataURL(file) {
 
   return new Promise(
@@ -1492,15 +1545,17 @@ function fileToDataURL(file) {
 
 
       reader.onload =
-        () => resolve(
-          reader.result
-        );
+        () =>
+          resolve(
+            reader.result
+          );
 
 
       reader.onerror =
-        () => reject(
-          reader.error
-        );
+        () =>
+          reject(
+            reader.error
+          );
 
 
       reader.readAsDataURL(
@@ -1517,7 +1572,6 @@ function fileToDataURL(file) {
 /* ============================================================
    PHOTO STAMP
    ============================================================ */
-
 
 async function stampPhoto(
   file,
@@ -1562,6 +1616,7 @@ async function stampPhoto(
                 maxWidth /
                 width
               );
+
 
             width =
               maxWidth;
@@ -1614,19 +1669,19 @@ async function stampPhoto(
             );
 
 
-          const latText =
+          const lat =
             currentLatitude !== null
               ? currentLatitude.toFixed(6)
               : "N/A";
 
 
-          const longText =
+          const lng =
             currentLongitude !== null
               ? currentLongitude.toFixed(6)
               : "N/A";
 
 
-          const accuracyText =
+          const accuracy =
             currentAccuracy !== null
               ? currentAccuracy.toFixed(1) +
                 " m"
@@ -1641,12 +1696,11 @@ async function stampPhoto(
 
             "Time: " + time,
 
-            "Lat: " + latText,
+            "Lat: " + lat,
 
-            "Long: " + longText,
+            "Long: " + lng,
 
-            "Accuracy: " +
-              accuracyText
+            "Accuracy: " + accuracy
 
           ];
 
@@ -1751,7 +1805,6 @@ async function stampPhoto(
    CREATE SUBMISSION
    ============================================================ */
 
-
 async function createSubmission() {
 
   const cluster =
@@ -1829,13 +1882,7 @@ async function createSubmission() {
   }
 
 
-
-  /*
-   * Fresh GPS capture immediately before submission.
-   */
-
   await captureGPS();
-
 
 
   if (
@@ -1844,21 +1891,18 @@ async function createSubmission() {
   ) {
 
     throw new Error(
-      "GPS location could not be captured. Please try again."
+      "GPS location could not be captured."
     );
 
   }
 
 
-
   const submissionId =
-    [
-      Date.now(),
-      Math.random()
-        .toString(36)
-        .substring(2, 10)
-    ].join("-");
-
+    Date.now() +
+    "-" +
+    Math.random()
+      .toString(36)
+      .substring(2, 10);
 
 
   const staffPhoto =
@@ -1875,56 +1919,36 @@ async function createSubmission() {
     );
 
 
-
   return {
 
     submissionId:
-
       submissionId,
 
-
     captureDate:
-
       new Date().toISOString(),
 
-
     cluster:
-
       cluster,
 
-
     school:
-
       school,
 
-
     emis:
-
       emis,
 
-
     latitude:
-
       currentLatitude,
 
-
     longitude:
-
       currentLongitude,
 
-
     accuracy:
-
       currentAccuracy,
 
-
     staffPhoto:
-
       staffPhoto,
 
-
     assemblyPhoto:
-
       assemblyPhoto
 
   };
@@ -1934,9 +1958,8 @@ async function createSubmission() {
 
 
 /* ============================================================
-   SUBMIT FORM
+   SUBMIT
    ============================================================ */
-
 
 async function submitForm() {
 
@@ -1951,15 +1974,11 @@ async function submitForm() {
   }
 
 
-  button.disabled = true;
+  button.disabled =
+    true;
 
 
   try {
-
-
-    /*
-     * First create complete submission.
-     */
 
     button.textContent =
       "Getting GPS...";
@@ -1969,13 +1988,9 @@ async function submitForm() {
       await createSubmission();
 
 
-
     /*
-     * IMPORTANT:
-     *
-     * If device is genuinely offline,
-     * then and only then save automatically
-     * as draft.
+     * ONLY genuinely offline:
+     * automatically create draft.
      */
 
     if (!navigator.onLine) {
@@ -1989,9 +2004,8 @@ async function submitForm() {
 
 
       alert(
-        "Internet available nahi hai.\n\n" +
-        "Data Draft mein save ho gaya hai.\n\n" +
-        "Internet aane ke baad Sync Pending Uploads press karein."
+        "Internet connection nahi hai.\n\n" +
+        "Data Draft mein save ho gaya hai."
       );
 
 
@@ -2003,13 +2017,9 @@ async function submitForm() {
     }
 
 
-
     /*
-     * Internet is available.
-     *
-     * Now DIRECT SERVER SUBMIT.
-     *
-     * 3 attempts will be made.
+     * Internet available:
+     * DIRECT SERVER SUBMISSION.
      */
 
     button.textContent =
@@ -2029,10 +2039,6 @@ async function submitForm() {
       );
 
 
-      /*
-       * SUCCESS
-       */
-
       alert(
         "Monitoring successfully submitted."
       );
@@ -2046,32 +2052,23 @@ async function submitForm() {
 
     } catch (serverError) {
 
-
-      /*
-       * IMPORTANT:
-       *
-       * Internet was available but server
-       * did not respond successfully.
-       *
-       * DO NOT automatically save as Draft.
-       */
-
       console.error(
-        "Final server error:",
+        "Server submission failed:",
         serverError
       );
 
+
+      /*
+       * IMPORTANT:
+       * Online user ke data ko automatically
+       * draft nahi banaya jayega.
+       */
 
       alert(
 
         "Internet available hai lekin server response nahi de raha.\n\n" +
 
-        "Data automatically Draft mein save nahi kiya gaya.\n\n" +
-
-        "Please thori dair baad Submit Monitoring dobara press karein.\n\n" +
-
-        "Server Error: " +
-        serverError.message
+        "Please thori dair baad Submit Monitoring dobara press karein."
 
       );
 
@@ -2079,7 +2076,6 @@ async function submitForm() {
 
 
   } catch (error) {
-
 
     console.error(
       "Submit error:",
@@ -2095,7 +2091,9 @@ async function submitForm() {
 
   } finally {
 
-    button.disabled = false;
+    button.disabled =
+      false;
+
 
     button.textContent =
       "Submit Monitoring";
@@ -2107,9 +2105,8 @@ async function submitForm() {
 
 
 /* ============================================================
-   MANUAL SAVE DRAFT
+   MANUAL DRAFT
    ============================================================ */
-
 
 async function saveDraft() {
 
@@ -2137,12 +2134,6 @@ async function saveDraft() {
 
   } catch (error) {
 
-    console.error(
-      "Draft error:",
-      error
-    );
-
-
     alert(
       error.message ||
       "Unable to save draft."
@@ -2158,13 +2149,12 @@ async function saveDraft() {
    SYNC DRAFTS
    ============================================================ */
 
-
 async function syncDrafts() {
 
   if (!navigator.onLine) {
 
     alert(
-      "Internet available nahi hai.\nPlease internet connection check karein."
+      "Internet connection available nahi hai."
     );
 
     return;
@@ -2259,7 +2249,6 @@ async function syncDrafts() {
    CLEAR FORM
    ============================================================ */
 
-
 function clearForm() {
 
   document.getElementById(
@@ -2275,29 +2264,38 @@ function clearForm() {
 
   document.getElementById(
     "school"
-  ).disabled = true;
+  ).disabled =
+    true;
 
 
   document.getElementById(
     "emis"
-  ).value = "";
+  ).value =
+    "";
 
 
   document.getElementById(
     "staffPhoto"
-  ).value = "";
+  ).value =
+    "";
 
 
   document.getElementById(
     "assemblyPhoto"
-  ).value = "";
+  ).value =
+    "";
 
 
-  currentLatitude = null;
+  currentLatitude =
+    null;
 
-  currentLongitude = null;
 
-  currentAccuracy = null;
+  currentLongitude =
+    null;
+
+
+  currentAccuracy =
+    null;
 
 
   updateGPSStatus(
@@ -2305,20 +2303,17 @@ function clearForm() {
   );
 
 
-  /*
-   * Start fresh GPS capture for next entry.
-   */
-
   setTimeout(
     () => {
 
-      captureGPS().catch(
-        error =>
-          console.log(
-            "GPS after reset:",
-            error
-          )
-      );
+      captureGPS()
+        .catch(
+          error =>
+            console.log(
+              "GPS reset:",
+              error
+            )
+        );
 
     },
     500
@@ -2331,7 +2326,6 @@ function clearForm() {
 /* ============================================================
    PENDING COUNT
    ============================================================ */
-
 
 async function updatePendingCount() {
 
@@ -2351,13 +2345,9 @@ async function updatePendingCount() {
       count;
 
 
-    const box =
-      document.getElementById(
-        "pendingBox"
-      );
-
-
-    box.style.display =
+    document.getElementById(
+      "pendingBox"
+    ).style.display =
       count > 0
         ? "block"
         : "none";
@@ -2379,7 +2369,6 @@ async function updatePendingCount() {
 /* ============================================================
    NETWORK STATUS
    ============================================================ */
-
 
 function updateNetworkStatus() {
 
@@ -2439,12 +2428,12 @@ window.addEventListener(
    PWA INSTALL
    ============================================================ */
 
-
 window.addEventListener(
   "beforeinstallprompt",
   function(event) {
 
     event.preventDefault();
+
 
     deferredInstallPrompt =
       event;
@@ -2476,14 +2465,7 @@ async function installApp() {
   deferredInstallPrompt.prompt();
 
 
-  const result =
-    await deferredInstallPrompt.userChoice;
-
-
-  console.log(
-    "Install result:",
-    result
-  );
+  await deferredInstallPrompt.userChoice;
 
 
   deferredInstallPrompt =
@@ -2502,7 +2484,6 @@ async function installApp() {
 /* ============================================================
    SERVICE WORKER
    ============================================================ */
-
 
 if (
   "serviceWorker" in navigator
@@ -2548,7 +2529,6 @@ if (
    START APP
    ============================================================ */
 
-
 async function startApp() {
 
   try {
@@ -2577,12 +2557,6 @@ async function startApp() {
   startGPSMonitoring();
 
 }
-
-
-
-/* ============================================================
-   START
-   ============================================================ */
 
 
 startApp();
