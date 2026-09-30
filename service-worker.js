@@ -1,8 +1,8 @@
 const CACHE_NAME =
-  "schools-daily-functionality-v3";
+  "schools-daily-functionality-v2";
 
 
-const FILES_TO_CACHE = [
+const APP_FILES = [
 
   "./",
 
@@ -15,26 +15,29 @@ const FILES_TO_CACHE = [
 ];
 
 
-
-/* ============================================================
+/* =====================================================
    INSTALL
-   ============================================================ */
+===================================================== */
 
 self.addEventListener(
   "install",
-  event => {
+  function(event) {
 
     event.waitUntil(
 
-      caches.open(
-        CACHE_NAME
-      )
-      .then(
-        cache =>
-          cache.addAll(
-            FILES_TO_CACHE
-          )
-      )
+      caches
+        .open(
+          CACHE_NAME
+        )
+        .then(
+          function(cache) {
+
+            return cache.addAll(
+              APP_FILES
+            );
+
+          }
+        )
 
     );
 
@@ -45,37 +48,47 @@ self.addEventListener(
 );
 
 
-
-/* ============================================================
+/* =====================================================
    ACTIVATE
-   ============================================================ */
+===================================================== */
 
 self.addEventListener(
   "activate",
-  event => {
+  function(event) {
 
     event.waitUntil(
 
-      caches.keys()
+      caches
+        .keys()
         .then(
-          cacheNames =>
+          function(cacheNames) {
 
-            Promise.all(
+            return Promise.all(
 
               cacheNames
                 .filter(
-                  cacheName =>
-                    cacheName !==
-                    CACHE_NAME
+                  function(cacheName) {
+
+                    return (
+                      cacheName !==
+                      CACHE_NAME
+                    );
+
+                  }
                 )
                 .map(
-                  cacheName =>
-                    caches.delete(
+                  function(cacheName) {
+
+                    return caches.delete(
                       cacheName
-                    )
+                    );
+
+                  }
                 )
 
-            )
+            );
+
+          }
         )
 
     );
@@ -87,19 +100,20 @@ self.addEventListener(
 );
 
 
-
-/* ============================================================
+/* =====================================================
    FETCH
-   ============================================================ */
+===================================================== */
 
 self.addEventListener(
   "fetch",
-  event => {
+  function(event) {
+
 
     /*
-     * POST requests ko cache nahi karna.
-     * Apps Script requests direct server par jayengi.
-     */
+      POST requests such as
+      Apps Script submissions
+      must go directly to server.
+    */
 
     if (
       event.request.method !==
@@ -113,79 +127,64 @@ self.addEventListener(
 
     event.respondWith(
 
-      fetch(
-        event.request
-      )
-      .then(
-        networkResponse => {
-
-          /*
-           * Latest network version ko cache
-           * mein save kar dein.
-           */
-
-          if (
-            networkResponse &&
-            networkResponse.ok
-          ) {
-
-            const copy =
-              networkResponse.clone();
+      caches
+        .match(
+          event.request
+        )
+        .then(
+          function(cachedResponse) {
 
 
-            caches.open(
-              CACHE_NAME
+            if (
+              cachedResponse
+            ) {
+
+              return cachedResponse;
+
+            }
+
+
+            return fetch(
+              event.request
             )
             .then(
-              cache => {
+              function(networkResponse) {
 
-                cache.put(
-                  event.request,
-                  copy
-                );
+
+                if (
+                  networkResponse &&
+                  networkResponse.status === 200
+                ) {
+
+                  const responseClone =
+                    networkResponse.clone();
+
+
+                  caches
+                    .open(
+                      CACHE_NAME
+                    )
+                    .then(
+                      function(cache) {
+
+                        cache.put(
+                          event.request,
+                          responseClone
+                        );
+
+                      }
+                    );
+
+                }
+
+
+                return networkResponse;
 
               }
             );
 
           }
-
-
-          return networkResponse;
-
-        }
-      )
-      .catch(
-        () => {
-
-          /*
-           * Internet unavailable ho to
-           * cached version use hogi.
-           */
-
-          return caches.match(
-            event.request
-          )
-          .then(
-            cachedResponse => {
-
-              if (
-                cachedResponse
-              ) {
-
-                return cachedResponse;
-
-              }
-
-
-              return caches.match(
-                "./index.html"
-              );
-
-            }
-          );
-
-        }
-      )
+        )
 
     );
 
