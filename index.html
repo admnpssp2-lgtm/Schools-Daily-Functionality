@@ -1,22 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
-  <base target="_top">
+  <meta charset="UTF-8">
 
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-  <meta name="theme-color"
-        content="#0b7a5c">
+  <meta
+    name="theme-color"
+    content="#0b7a5c"
+  >
 
-  <meta name="description"
-        content="PEF / PEIMA Schools Daily Functionality Monitoring System">
+  <meta
+    name="description"
+    content="Schools Daily Functionality"
+  >
 
-  <title>Schools Daily Functionality</title>
+  <link
+    rel="manifest"
+    href="manifest.json"
+  >
 
-  <link rel="manifest" href="./manifest.json">
+  <title>
+    Schools Daily Functionality
+  </title>
+
 
   <style>
 
@@ -25,197 +37,349 @@
     }
 
     body {
+
       margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      background: #f3f6f5;
-      color: #222;
+
+      font-family:
+        Arial,
+        sans-serif;
+
+      background:
+        #f3f6f5;
+
+      color:
+        #222;
+
     }
 
     .header {
-      background: #0b7a5c;
-      color: white;
-      padding: 16px;
-      text-align: center;
-      font-size: 21px;
-      font-weight: bold;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+
+      background:
+        #0b7a5c;
+
+      color:
+        white;
+
+      padding:
+        18px;
+
+      text-align:
+        center;
+
     }
 
-    .sub-header {
-      text-align: center;
-      font-size: 13px;
-      background: #075b45;
-      color: white;
-      padding: 7px;
+    .header h1 {
+
+      margin:
+        0;
+
+      font-size:
+        22px;
+
+    }
+
+    .header p {
+
+      margin:
+        6px 0 0;
+
+      font-size:
+        13px;
+
     }
 
     .container {
-      max-width: 650px;
-      margin: auto;
-      padding: 15px;
+
+      max-width:
+        650px;
+
+      margin:
+        auto;
+
+      padding:
+        15px;
+
     }
 
-    .card {
-      background: white;
-      border-radius: 12px;
-      padding: 18px;
-      margin-bottom: 15px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
+    .status {
 
-    .section-title {
-      color: #0b7a5c;
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 15px;
-      border-bottom: 2px solid #0b7a5c;
-      padding-bottom: 7px;
-    }
+      padding:
+        10px;
 
-    label {
-      display: block;
-      font-weight: bold;
-      margin-top: 12px;
-      margin-bottom: 6px;
-    }
+      border-radius:
+        8px;
 
-    select,
-    input[type="text"],
-    input[type="number"],
-    input[type="file"] {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #bbb;
-      border-radius: 8px;
-      font-size: 15px;
-      background: white;
-    }
+      margin-bottom:
+        15px;
 
-    select:focus,
-    input:focus {
-      outline: none;
-      border-color: #0b7a5c;
-    }
+      text-align:
+        center;
 
-    input[readonly] {
-      background: #eeeeee;
-    }
+      font-weight:
+        bold;
 
-    .gps-box {
-      background: #eef8f4;
-      border: 1px solid #9dd6c3;
-      border-radius: 10px;
-      padding: 12px;
-      margin-top: 15px;
-      font-size: 13px;
-    }
+      font-size:
+        14px;
 
-    .gps-title {
-      font-weight: bold;
-      color: #0b7a5c;
-      margin-bottom: 5px;
-    }
-
-    .gps-status {
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-
-    .gps-data {
-      line-height: 1.6;
-      word-break: break-word;
-    }
-
-    .photo-box {
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      padding: 13px;
-      margin-top: 15px;
-      background: #fafafa;
-    }
-
-    .photo-title {
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
-
-    .photo-note {
-      font-size: 12px;
-      color: #666;
-      margin-top: 6px;
-    }
-
-    button {
-      width: 100%;
-      border: none;
-      border-radius: 9px;
-      padding: 13px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    .btn-primary {
-      background: #0b7a5c;
-      color: white;
-    }
-
-    .btn-primary:disabled {
-      background: #8bb8aa;
-      cursor: not-allowed;
-    }
-
-    .btn-draft {
-      background: #e5a100;
-      color: white;
-    }
-
-    .btn-sync {
-      background: #2563eb;
-      color: white;
-    }
-
-    .btn-install {
-      background: #555;
-      color: white;
-    }
-
-    .status-box {
-      text-align: center;
-      padding: 10px;
-      margin-bottom: 12px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: bold;
     }
 
     .online {
-      background: #d9f7e9;
-      color: #087443;
+
+      background:
+        #d9f5e9;
+
+      color:
+        #087447;
+
     }
 
     .offline {
-      background: #ffe2e2;
-      color: #a40000;
+
+      background:
+        #ffe4e4;
+
+      color:
+        #a00000;
+
     }
 
-    .pending-box {
-      text-align: center;
-      background: #fff8dd;
-      border: 1px solid #efd36b;
-      border-radius: 8px;
-      padding: 9px;
-      margin-bottom: 10px;
-      font-size: 13px;
+    .card {
+
+      background:
+        white;
+
+      border-radius:
+        12px;
+
+      padding:
+        18px;
+
+      margin-bottom:
+        15px;
+
+      box-shadow:
+        0 2px 8px
+        rgba(0,0,0,0.08);
+
     }
 
-    .small-note {
-      font-size: 12px;
-      color: #666;
-      line-height: 1.5;
-      margin-top: 8px;
+    label {
+
+      display:
+        block;
+
+      margin-top:
+        12px;
+
+      margin-bottom:
+        6px;
+
+      font-weight:
+        bold;
+
+      font-size:
+        14px;
+
+    }
+
+    select,
+    input[type="text"] {
+
+      width:
+        100%;
+
+      padding:
+        12px;
+
+      border:
+        1px solid #ccc;
+
+      border-radius:
+        8px;
+
+      font-size:
+        15px;
+
+      background:
+        white;
+
+    }
+
+    input[readonly] {
+
+      background:
+        #eeeeee;
+
+    }
+
+    .photo-box {
+
+      border:
+        2px dashed #bbb;
+
+      border-radius:
+        10px;
+
+      padding:
+        15px;
+
+      margin-top:
+        15px;
+
+      text-align:
+        center;
+
+    }
+
+    .photo-box strong {
+
+      display:
+        block;
+
+      margin-bottom:
+        10px;
+
+    }
+
+    input[type="file"] {
+
+      width:
+        100%;
+
+    }
+
+    .preview {
+
+      width:
+        100%;
+
+      max-height:
+        350px;
+
+      object-fit:
+        contain;
+
+      margin-top:
+        12px;
+
+      border-radius:
+        8px;
+
+      display:
+        none;
+
+    }
+
+    button {
+
+      width:
+        100%;
+
+      border:
+        none;
+
+      border-radius:
+        9px;
+
+      padding:
+        13px;
+
+      margin-top:
+        10px;
+
+      font-size:
+        15px;
+
+      font-weight:
+        bold;
+
+      cursor:
+        pointer;
+
+    }
+
+    .primary {
+
+      background:
+        #0b7a5c;
+
+      color:
+        white;
+
+    }
+
+    .secondary {
+
+      background:
+        #e8eeee;
+
+      color:
+        #164d40;
+
+    }
+
+    .install {
+
+      background:
+        #1559a6;
+
+      color:
+        white;
+
+      display:
+        none;
+
+    }
+
+    .gps {
+
+      background:
+        #eef7ff;
+
+      padding:
+        10px;
+
+      border-radius:
+        8px;
+
+      margin-top:
+        12px;
+
+      font-size:
+        13px;
+
+    }
+
+    .pending {
+
+      text-align:
+        center;
+
+      font-weight:
+        bold;
+
+      margin-top:
+        10px;
+
+      color:
+        #b05a00;
+
+    }
+
+    .info {
+
+      font-size:
+        13px;
+
+      color:
+        #555;
+
+      margin-top:
+        8px;
+
+      line-height:
+        1.5;
+
     }
 
   </style>
@@ -225,57 +389,55 @@
 
 <body>
 
-  <div class="header">
-    Schools Daily Functionality
-  </div>
 
-  <div class="sub-header">
-    PEF / PEIMA Schools Monitoring System
+  <div class="header">
+
+    <h1>
+      Schools Daily Functionality
+    </h1>
+
+    <p>
+      PEF / PEIMA
+    </p>
+
   </div>
 
 
   <div class="container">
 
-    <div id="networkStatus"
-         class="status-box online">
-      Checking Internet...
-    </div>
 
-
-    <div id="pendingBox"
-         class="pending-box"
-         style="display:none;">
-
-      Pending Uploads:
-      <span id="pendingCount">0</span>
-
+    <div
+      id="networkStatus"
+      class="status online"
+    >
+      Checking connection...
     </div>
 
 
     <div class="card">
 
-      <div class="section-title">
-        School Information
-      </div>
 
-
-      <label for="cluster">
-        Cluster Name
+      <label>
+        Cluster
       </label>
 
       <select id="cluster">
+
         <option value="">
-          Loading Clusters...
+          Loading clusters...
         </option>
+
       </select>
 
 
-      <label for="school">
-        School Name
+      <label>
+        School
       </label>
 
-      <select id="school"
-              disabled>
+      <select
+        id="school"
+        disabled
+      >
 
         <option value="">
           Select Cluster First
@@ -284,353 +446,223 @@
       </select>
 
 
-      <label for="emis">
+      <label>
         EMIS Code
       </label>
 
-      <input type="text"
-             id="emis"
-             readonly
-             placeholder="Auto-filled">
+      <input
+        type="text"
+        id="emis"
+        readonly
+      >
 
 
-      <div class="gps-box">
+      <div class="gps">
 
-        <div class="gps-title">
-          📍 School Location
-        </div>
+        <strong>
+          GPS Location
+        </strong>
 
-        <div id="gpsStatus"
-             class="gps-status">
-
+        <div id="gpsStatus">
           Getting location...
-
-        </div>
-
-        <div id="gpsData"
-             class="gps-data">
-
-          Please allow location access.
-
         </div>
 
       </div>
+
 
     </div>
 
 
-
     <div class="card">
 
-      <div class="section-title">
-        Daily Monitoring Photos
+
+      <div class="photo-box">
+
+        <strong>
+          1. Staff with PEF/PEIMA Board
+        </strong>
+
+        <input
+          type="file"
+          id="staffPhoto"
+          accept="image/*"
+          capture="environment"
+        >
+
+        <img
+          id="staffPreview"
+          class="preview"
+        >
+
       </div>
 
 
       <div class="photo-box">
 
-        <div class="photo-title">
-          1. Staff with PEF / PEIMA Board
-        </div>
-
-        <input type="file"
-               id="staffPhoto"
-               accept="image/*"
-               capture="environment">
-
-      </div>
-
-
-      <div class="photo-box">
-
-        <div class="photo-title">
+        <strong>
           2. Students Morning Assembly
-        </div>
+        </strong>
 
-        <input type="file"
-               id="assemblyPhoto"
-               accept="image/*"
-               capture="environment">
+        <input
+          type="file"
+          id="assemblyPhoto"
+          accept="image/*"
+          capture="environment"
+        >
+
+        <img
+          id="assemblyPreview"
+          class="preview"
+        >
 
       </div>
 
-    </div>
 
+      <div class="info">
+
+        Photo will contain
+        Date, Time, Latitude and Longitude.
+
+      </div>
+
+
+    </div>
 
 
     <div class="card">
 
-      <button id="submitBtn"
-              class="btn-primary"
-              onclick="submitForm()">
 
-        Submit Monitoring
-
+      <button
+        id="submitBtn"
+        class="primary"
+        onclick="submitForm()"
+      >
+        Submit
       </button>
 
 
-      <button class="btn-draft"
-              onclick="saveDraft()">
-
+      <button
+        class="secondary"
+        onclick="saveDraft()"
+      >
         Save Draft
-
       </button>
 
 
-      <button class="btn-sync"
-              onclick="syncDrafts()">
-
+      <button
+        class="secondary"
+        onclick="syncDrafts()"
+      >
         Sync Pending Uploads
-
       </button>
 
 
-      <button id="installBtn"
-              class="btn-install"
-              style="display:none;"
-              onclick="installApp()">
-
+      <button
+        id="installBtn"
+        class="install"
+      >
         Install App
-
       </button>
+
+
+      <div
+        id="pendingCount"
+        class="pending"
+      >
+        Pending Uploads: 0
+      </div>
+
 
     </div>
+
 
   </div>
-
 
 
 <script>
 
 
-/* ============================================================
-   CONFIGURATION
-   ============================================================ */
+/* =====================================================
+   APPS SCRIPT API
+===================================================== */
 
 const API_URL =
   "https://script.google.com/macros/s/AKfycbwxsV6ZkY2usbNs1Q9gqkxaJivNGgdkzLJNIW4Nynq3XXa1XwgF3P6CU4fCqnT6rN0SuQ/exec";
 
 
+/* =====================================================
+   DATABASE
+===================================================== */
+
 const DB_NAME =
   "SchoolsDailyFunctionalityDB";
 
-
-const DB_VERSION = 1;
-
-
-/* ============================================================
-   GLOBAL VARIABLES
-   ============================================================ */
-
-let db = null;
-
-let masterData = [];
-
-let currentLatitude = null;
-
-let currentLongitude = null;
-
-let currentAccuracy = null;
-
-let gpsWatchId = null;
-
-let deferredInstallPrompt = null;
+let db;
 
 
-/* ============================================================
-   INDEXED DB
-   ============================================================ */
+/* =====================================================
+   OPEN DATABASE
+===================================================== */
 
 function openDB() {
 
-  return new Promise((resolve, reject) => {
-
-    const request =
-      indexedDB.open(
-        DB_NAME,
-        DB_VERSION
-      );
-
-
-    request.onupgradeneeded =
-      function(event) {
-
-        const database =
-          event.target.result;
-
-
-        if (
-          !database.objectStoreNames
-            .contains("master")
-        ) {
-
-          database.createObjectStore(
-            "master",
-            {
-              keyPath: "id"
-            }
-          );
-
-        }
-
-
-        if (
-          !database.objectStoreNames
-            .contains("drafts")
-        ) {
-
-          database.createObjectStore(
-            "drafts",
-            {
-              keyPath: "submissionId"
-            }
-          );
-
-        }
-
-      };
-
-
-    request.onsuccess =
-      function(event) {
-
-        db =
-          event.target.result;
-
-        resolve(db);
-
-      };
-
-
-    request.onerror =
-      function() {
-
-        reject(
-          request.error
-        );
-
-      };
-
-  });
-
-}
-
-
-
-/* ============================================================
-   MASTER DATA SAVE
-   ============================================================ */
-
-function saveMasterData(data) {
-
   return new Promise(
-    (resolve, reject) => {
-
-      if (!db) {
-
-        reject(
-          new Error(
-            "Database not ready."
-          )
-        );
-
-        return;
-
-      }
-
-
-      const tx =
-        db.transaction(
-          "master",
-          "readwrite"
-        );
-
-
-      const store =
-        tx.objectStore(
-          "master"
-        );
-
-
-      store.clear();
-
-
-      data.forEach(
-        (item, index) => {
-
-          store.put({
-
-            id: index + 1,
-
-            cluster: item.cluster,
-
-            school: item.school,
-
-            emis: item.emis
-
-          });
-
-        }
-      );
-
-
-      tx.oncomplete =
-        () => resolve();
-
-
-      tx.onerror =
-        () => reject(
-          tx.error
-        );
-
-    }
-  );
-
-}
-
-
-
-/* ============================================================
-   MASTER DATA READ
-   ============================================================ */
-
-function getLocalMasterData() {
-
-  return new Promise(
-    (resolve, reject) => {
-
-      if (!db) {
-
-        resolve([]);
-
-        return;
-
-      }
-
-
-      const tx =
-        db.transaction(
-          "master",
-          "readonly"
-        );
-
-
-      const store =
-        tx.objectStore(
-          "master"
-        );
-
+    function(resolve, reject) {
 
       const request =
-        store.getAll();
+        indexedDB.open(
+          DB_NAME,
+          1
+        );
+
+
+      request.onupgradeneeded =
+        function(event) {
+
+          const database =
+            event.target.result;
+
+
+          if (
+            !database.objectStoreNames
+              .contains("master")
+          ) {
+
+            database.createObjectStore(
+              "master",
+              {
+                keyPath: "id"
+              }
+            );
+
+          }
+
+
+          if (
+            !database.objectStoreNames
+              .contains("drafts")
+          ) {
+
+            database.createObjectStore(
+              "drafts",
+              {
+                keyPath:
+                  "submissionId"
+              }
+            );
+
+          }
+
+        };
 
 
       request.onsuccess =
-        function() {
+        function(event) {
 
-          resolve(
-            request.result || []
-          );
+          db =
+            event.target.result;
+
+          resolve();
 
         };
 
@@ -650,40 +682,50 @@ function getLocalMasterData() {
 }
 
 
+/* =====================================================
+   DB PUT
+===================================================== */
 
-/* ============================================================
-   SAVE DRAFT
-   ============================================================ */
-
-function saveDraftToDB(data) {
+function dbPut(
+  storeName,
+  data
+) {
 
   return new Promise(
-    (resolve, reject) => {
+    function(resolve, reject) {
 
-      const tx =
+      const transaction =
         db.transaction(
-          "drafts",
+          storeName,
           "readwrite"
         );
 
 
       const store =
-        tx.objectStore(
-          "drafts"
+        transaction.objectStore(
+          storeName
         );
 
 
       store.put(data);
 
 
-      tx.oncomplete =
-        () => resolve();
+      transaction.oncomplete =
+        function() {
+
+          resolve();
+
+        };
 
 
-      tx.onerror =
-        () => reject(
-          tx.error
-        );
+      transaction.onerror =
+        function() {
+
+          reject(
+            transaction.error
+          );
+
+        };
 
     }
   );
@@ -691,26 +733,27 @@ function saveDraftToDB(data) {
 }
 
 
+/* =====================================================
+   DB GET ALL
+===================================================== */
 
-/* ============================================================
-   GET DRAFTS
-   ============================================================ */
-
-function getDrafts() {
+function dbGetAll(
+  storeName
+) {
 
   return new Promise(
-    (resolve, reject) => {
+    function(resolve, reject) {
 
-      const tx =
+      const transaction =
         db.transaction(
-          "drafts",
+          storeName,
           "readonly"
         );
 
 
       const store =
-        tx.objectStore(
-          "drafts"
+        transaction.objectStore(
+          storeName
         );
 
 
@@ -722,7 +765,7 @@ function getDrafts() {
         function() {
 
           resolve(
-            request.result || []
+            request.result
           );
 
         };
@@ -743,44 +786,50 @@ function getDrafts() {
 }
 
 
+/* =====================================================
+   DB DELETE
+===================================================== */
 
-/* ============================================================
-   DELETE DRAFT
-   ============================================================ */
-
-function deleteDraft(
-  submissionId
+function dbDelete(
+  storeName,
+  key
 ) {
 
   return new Promise(
-    (resolve, reject) => {
+    function(resolve, reject) {
 
-      const tx =
+      const transaction =
         db.transaction(
-          "drafts",
+          storeName,
           "readwrite"
         );
 
 
       const store =
-        tx.objectStore(
-          "drafts"
+        transaction.objectStore(
+          storeName
         );
 
 
-      store.delete(
-        submissionId
-      );
+      store.delete(key);
 
 
-      tx.oncomplete =
-        () => resolve();
+      transaction.oncomplete =
+        function() {
+
+          resolve();
+
+        };
 
 
-      tx.onerror =
-        () => reject(
-          tx.error
-        );
+      transaction.onerror =
+        function() {
+
+          reject(
+            transaction.error
+          );
+
+        };
 
     }
   );
@@ -788,10 +837,9 @@ function deleteDraft(
 }
 
 
-
-/* ============================================================
+/* =====================================================
    API REQUEST
-   ============================================================ */
+===================================================== */
 
 async function apiRequest(
   action,
@@ -803,19 +851,24 @@ async function apiRequest(
       API_URL,
       {
 
-        method: "POST",
+        method:
+          "POST",
 
         headers: {
+
           "Content-Type":
             "text/plain;charset=utf-8"
+
         },
 
         body:
           JSON.stringify({
 
-            action: action,
+            action:
+              action,
 
-            ...payload
+            payload:
+              payload
 
           })
 
@@ -826,39 +879,21 @@ async function apiRequest(
   if (!response.ok) {
 
     throw new Error(
-      "Server HTTP Error: " +
-      response.status
+      "Server connection failed."
     );
 
   }
 
 
-  const text =
-    await response.text();
-
-
-  let result;
-
-
-  try {
-
-    result =
-      JSON.parse(text);
-
-  } catch (error) {
-
-    throw new Error(
-      "Invalid server response."
-    );
-
-  }
+  const result =
+    await response.json();
 
 
   if (!result.success) {
 
     throw new Error(
-      result.error ||
-      "Server rejected request."
+      result.message ||
+      "Server error."
     );
 
   }
@@ -869,103 +904,42 @@ async function apiRequest(
 }
 
 
+/* =====================================================
+   LOAD MASTER DATA
+===================================================== */
 
-/* ============================================================
-   API RETRY
-   ============================================================ */
+async function loadMasterData() {
 
-async function apiRequestWithRetry(
-  action,
-  payload = {},
-  maxAttempts = 3
-) {
-
-  let lastError = null;
+  let master =
+    await dbGetAll(
+      "master"
+    );
 
 
-  for (
-    let attempt = 1;
-    attempt <= maxAttempts;
-    attempt++
+  if (
+    navigator.onLine
   ) {
 
     try {
 
-      return await apiRequest(
-        action,
-        payload
-      );
-
-    } catch (error) {
-
-      lastError =
-        error;
-
-
-      console.error(
-        "API attempt " +
-        attempt +
-        " failed:",
-        error
-      );
-
-
-      if (
-        attempt <
-        maxAttempts
-      ) {
-
-        const delay =
-          attempt === 1
-            ? 1500
-            : 3000;
-
-
-        await new Promise(
-          resolve =>
-            setTimeout(
-              resolve,
-              delay
-            )
+      const data =
+        await apiRequest(
+          "getSchoolMasterData"
         );
 
-      }
 
-    }
+      for (
+        const item of data
+      ) {
 
-  }
+        await dbPut(
+          "master",
+          {
 
-
-  throw (
-    lastError ||
-    new Error(
-      "Server connection failed."
-    )
-  );
-
-}
-
-
-
-/* ============================================================
-   LOAD MASTER DATA
-   ============================================================ */
-
-async function loadMasterData() {
-
-  try {
-
-    const local =
-      await getLocalMasterData();
-
-
-    if (
-      local.length > 0
-    ) {
-
-      masterData =
-        local.map(
-          item => ({
+            id:
+              item.cluster +
+              "|" +
+              item.school,
 
             cluster:
               item.cluster,
@@ -976,78 +950,47 @@ async function loadMasterData() {
             emis:
               item.emis
 
-          })
+          }
         );
 
-
-      populateClusters();
-
-    }
-
-  } catch (error) {
-
-    console.error(
-      "Local master error:",
-      error
-    );
-
-  }
+      }
 
 
-
-  if (!navigator.onLine) {
-
-    return;
-
-  }
-
-
-  try {
-
-    const data =
-      await apiRequest(
-        "getSchoolMasterData"
-      );
-
-
-    if (
-      Array.isArray(data) &&
-      data.length > 0
-    ) {
-
-      masterData =
-        data;
-
-
-      await saveMasterData(
-        masterData
-      );
-
-
-      populateClusters();
+      master =
+        await dbGetAll(
+          "master"
+        );
 
     }
 
-  } catch (error) {
+    catch(error) {
 
-    console.error(
-      "Master data error:",
-      error
-    );
+      console.log(
+        "Could not refresh master data:",
+        error
+      );
+
+    }
 
   }
+
+
+  populateClusters(
+    master
+  );
 
 }
 
 
+/* =====================================================
+   POPULATE CLUSTERS
+===================================================== */
 
-/* ============================================================
-   CLUSTERS
-   ============================================================ */
+function populateClusters(
+  master
+) {
 
-function populateClusters() {
-
-  const select =
+  const clusterSelect =
     document.getElementById(
       "cluster"
     );
@@ -1056,27 +999,26 @@ function populateClusters() {
   const clusters =
     [
       ...new Set(
+        master.map(
+          function(item) {
 
-        masterData
-          .map(
-            item =>
-              String(
-                item.cluster || ""
-              ).trim()
-          )
-          .filter(Boolean)
+            return item.cluster;
 
+          }
+        )
       )
-    ]
-    .sort();
+    ];
 
 
-  select.innerHTML =
+  clusters.sort();
+
+
+  clusterSelect.innerHTML =
     '<option value="">Select Cluster</option>';
 
 
   clusters.forEach(
-    cluster => {
+    function(cluster) {
 
       const option =
         document.createElement(
@@ -1092,161 +1034,337 @@ function populateClusters() {
         cluster;
 
 
-      select.appendChild(
+      clusterSelect.appendChild(
         option
       );
 
     }
   );
 
-
-  document.getElementById(
-    "school"
-  ).innerHTML =
-    '<option value="">Select Cluster First</option>';
-
-
-  document.getElementById(
-    "school"
-  ).disabled = true;
-
 }
 
 
-
-/* ============================================================
+/* =====================================================
    CLUSTER CHANGE
-   ============================================================ */
+===================================================== */
 
-document.getElementById(
-  "cluster"
-).addEventListener(
-  "change",
-  function() {
+document
+  .getElementById("cluster")
+  .addEventListener(
+    "change",
+    async function() {
 
-    const cluster =
-      this.value;
-
-
-    const schoolSelect =
-      document.getElementById(
-        "school"
-      );
+      const cluster =
+        this.value;
 
 
-    const emis =
-      document.getElementById(
-        "emis"
-      );
+      const schoolSelect =
+        document.getElementById(
+          "school"
+        );
 
 
-    schoolSelect.innerHTML =
-      '<option value="">Select School</option>';
+      const emis =
+        document.getElementById(
+          "emis"
+        );
 
 
-    emis.value = "";
+      schoolSelect.innerHTML =
+        '<option value="">Select School</option>';
 
 
-    if (!cluster) {
+      emis.value =
+        "";
+
 
       schoolSelect.disabled =
         true;
 
-      return;
 
-    }
+      if (!cluster) {
 
-
-    const schools =
-      masterData
-        .filter(
-          item =>
-            String(
-              item.cluster || ""
-            ).trim() ===
-            cluster
-        )
-        .sort(
-          (a, b) =>
-            String(a.school)
-              .localeCompare(
-                String(b.school)
-              )
-        );
-
-
-    schools.forEach(
-      item => {
-
-        const option =
-          document.createElement(
-            "option"
-          );
-
-
-        option.value =
-          item.school;
-
-
-        option.textContent =
-          item.school;
-
-
-        option.dataset.emis =
-          item.emis;
-
-
-        schoolSelect.appendChild(
-          option
-        );
+        return;
 
       }
+
+
+      const master =
+        await dbGetAll(
+          "master"
+        );
+
+
+      const schools =
+        master.filter(
+          function(item) {
+
+            return String(
+              item.cluster
+            ) === String(
+              cluster
+            );
+
+          }
+        );
+
+
+      schools.sort(
+        function(a, b) {
+
+          return String(
+            a.school
+          ).localeCompare(
+            String(b.school)
+          );
+
+        }
+      );
+
+
+      schools.forEach(
+        function(item) {
+
+          const option =
+            document.createElement(
+              "option"
+            );
+
+
+          option.value =
+            item.school;
+
+
+          option.textContent =
+            item.school;
+
+
+          option.dataset.emis =
+            item.emis;
+
+
+          schoolSelect.appendChild(
+            option
+          );
+
+        }
+      );
+
+
+      schoolSelect.disabled =
+        false;
+
+    }
+  );
+
+
+/* =====================================================
+   SCHOOL CHANGE
+===================================================== */
+
+document
+  .getElementById("school")
+  .addEventListener(
+    "change",
+    function() {
+
+      const selected =
+        this.options[
+          this.selectedIndex
+        ];
+
+
+      document.getElementById(
+        "emis"
+      ).value =
+        selected.dataset.emis ||
+        "";
+
+    }
+  );
+
+
+/* =====================================================
+   GPS VARIABLES
+===================================================== */
+
+let currentLatitude = "";
+let currentLongitude = "";
+let currentAccuracy = "";
+let gpsWatchId = null;
+
+
+/* =====================================================
+   GPS SUCCESS
+===================================================== */
+
+function gpsSuccess(position) {
+
+  currentLatitude =
+    position.coords.latitude;
+
+  currentLongitude =
+    position.coords.longitude;
+
+  currentAccuracy =
+    position.coords.accuracy;
+
+  const status =
+    document.getElementById(
+      "gpsStatus"
     );
 
 
-    schoolSelect.disabled =
-      false;
+  status.innerHTML =
+    "🟢 Location Captured<br>" +
+    "LAT: " +
+    currentLatitude +
+    "<br>" +
+    "LONG: " +
+    currentLongitude +
+    "<br>" +
+    "Accuracy: " +
+    Math.round(
+      currentAccuracy
+    ) +
+    " meters";
+
+}
+
+
+/* =====================================================
+   GPS ERROR
+===================================================== */
+
+function gpsError(error) {
+
+  const status =
+    document.getElementById(
+      "gpsStatus"
+    );
+
+
+  let message =
+    "GPS location unavailable.";
+
+
+  if (
+    error &&
+    error.code === 1
+  ) {
+
+    message =
+      "Location permission denied. Please allow location access.";
 
   }
-);
+
+  else if (
+    error &&
+    error.code === 2
+  ) {
+
+    message =
+      "Location could not be determined. Searching again...";
+
+  }
+
+  else if (
+    error &&
+    error.code === 3
+  ) {
+
+    message =
+      "GPS is taking longer than expected. Searching again...";
+
+  }
 
 
+  status.textContent =
+    message;
 
-/* ============================================================
-   SCHOOL CHANGE
-   ============================================================ */
 
-document.getElementById(
-  "school"
-).addEventListener(
-  "change",
-  function() {
+  console.log(
+    "GPS error:",
+    error
+  );
 
-    const option =
-      this.options[
-        this.selectedIndex
-      ];
+}
 
+
+/* =====================================================
+   START GPS MONITORING
+===================================================== */
+
+function startGPSMonitoring() {
+
+  if (
+    !navigator.geolocation
+  ) {
 
     document.getElementById(
-      "emis"
-    ).value =
-      option?.dataset?.emis ||
-      "";
+      "gpsStatus"
+    ).textContent =
+      "GPS is not supported on this device.";
+
+    return;
 
   }
-);
 
 
+  document.getElementById(
+    "gpsStatus"
+  ).textContent =
+    "Getting precise GPS location...";
 
-/* ============================================================
-   GPS
-   ============================================================ */
 
-function captureGPS() {
+  /* First immediate location */
+
+  navigator.geolocation.getCurrentPosition(
+    gpsSuccess,
+    gpsError,
+    {
+      enableHighAccuracy: true,
+      timeout: 30000,
+      maximumAge: 0
+    }
+  );
+
+
+  /* Continue watching for better accuracy */
+
+  if (
+    gpsWatchId !== null
+  ) {
+
+    navigator.geolocation.clearWatch(
+      gpsWatchId
+    );
+
+  }
+
+
+  gpsWatchId =
+    navigator.geolocation.watchPosition(
+      gpsSuccess,
+      gpsError,
+      {
+        enableHighAccuracy: true,
+        timeout: 30000,
+        maximumAge: 5000
+      }
+    );
+
+}
+
+
+/* =====================================================
+   GET FRESH GPS BEFORE SUBMIT
+===================================================== */
+
+function getFreshGPS() {
 
   return new Promise(
-    (resolve, reject) => {
+    function(resolve, reject) {
 
       if (
         !navigator.geolocation
@@ -1263,110 +1381,96 @@ function captureGPS() {
       }
 
 
-      updateGPSStatus(
-        "Getting accurate location..."
-      );
+      const status =
+        document.getElementById(
+          "gpsStatus"
+        );
+
+
+      status.textContent =
+        "Getting fresh GPS location...";
 
 
       navigator.geolocation.getCurrentPosition(
 
         function(position) {
 
-          currentLatitude =
-            position.coords.latitude;
-
-
-          currentLongitude =
-            position.coords.longitude;
-
-
-          currentAccuracy =
-            position.coords.accuracy;
-
-
-          updateGPSStatus(
-            "Location Captured"
+          gpsSuccess(
+            position
           );
 
-
-          resolve({
-
-            latitude:
-              currentLatitude,
-
-            longitude:
-              currentLongitude,
-
-            accuracy:
-              currentAccuracy
-
-          });
+          resolve(
+            position
+          );
 
         },
 
-
         function(error) {
 
-          let message =
-            "Unable to get location.";
-
+          /*
+            If a previous GPS position
+            already exists, use it only
+            as a fallback.
+          */
 
           if (
-            error.code ===
-            error.PERMISSION_DENIED
+            currentLatitude !== "" &&
+            currentLongitude !== ""
           ) {
 
-            message =
-              "Location permission denied.";
+            status.innerHTML =
+              "🟢 Using latest available location<br>" +
+              "LAT: " +
+              currentLatitude +
+              "<br>" +
+              "LONG: " +
+              currentLongitude +
+              "<br>" +
+              "Accuracy: " +
+              (
+                currentAccuracy !== ""
+                  ? Math.round(
+                      currentAccuracy
+                    ) + " meters"
+                  : "Not available"
+              );
+
+
+            resolve({
+              coords: {
+                latitude:
+                  currentLatitude,
+
+                longitude:
+                  currentLongitude,
+
+                accuracy:
+                  currentAccuracy || 0
+              }
+            });
+
+            return;
 
           }
 
 
-          if (
-            error.code ===
-            error.POSITION_UNAVAILABLE
-          ) {
-
-            message =
-              "Location unavailable.";
-
-          }
-
-
-          if (
-            error.code ===
-            error.TIMEOUT
-          ) {
-
-            message =
-              "GPS timeout. Please try again.";
-
-          }
-
-
-          updateGPSStatus(
-            message
+          gpsError(
+            error
           );
 
 
           reject(
-            new Error(message)
+            new Error(
+              "GPS location is required. Please wait for the location to be captured and try again."
+            )
           );
 
         },
 
-
         {
-
-          enableHighAccuracy:
-            true,
-
-          timeout:
-            45000,
-
-          maximumAge:
-            0
-
+          enableHighAccuracy: true,
+          timeout: 30000,
+          maximumAge: 0
         }
 
       );
@@ -1377,185 +1481,194 @@ function captureGPS() {
 }
 
 
+/* =====================================================
+   STAMP PHOTO
+===================================================== */
 
-/* ============================================================
-   GPS WATCH
-   ============================================================ */
-
-function startGPSMonitoring() {
-
-  if (
-    !navigator.geolocation
-  ) {
-
-    return;
-
-  }
-
-
-  captureGPS()
-    .catch(
-      error =>
-        console.log(
-          "Initial GPS:",
-          error
-        )
-    );
-
-
-  if (
-    gpsWatchId !== null
-  ) {
-
-    navigator.geolocation
-      .clearWatch(
-        gpsWatchId
-      );
-
-  }
-
-
-  gpsWatchId =
-    navigator.geolocation
-      .watchPosition(
-
-        function(position) {
-
-          currentLatitude =
-            position.coords.latitude;
-
-
-          currentLongitude =
-            position.coords.longitude;
-
-
-          currentAccuracy =
-            position.coords.accuracy;
-
-
-          updateGPSStatus(
-            "Location Captured"
-          );
-
-        },
-
-
-        function(error) {
-
-          console.log(
-            "GPS watch error:",
-            error
-          );
-
-        },
-
-
-        {
-
-          enableHighAccuracy:
-            true,
-
-          timeout:
-            45000,
-
-          maximumAge:
-            10000
-
-        }
-
-      );
-
-}
-
-
-
-/* ============================================================
-   GPS DISPLAY
-   ============================================================ */
-
-function updateGPSStatus(
-  message
+function stampPhoto(
+  file,
+  latitude,
+  longitude
 ) {
 
-  const status =
-    document.getElementById(
-      "gpsStatus"
-    );
-
-
-  const data =
-    document.getElementById(
-      "gpsData"
-    );
-
-
-  status.textContent =
-    message;
-
-
-  if (
-    currentLatitude !== null &&
-    currentLongitude !== null
-  ) {
-
-    data.innerHTML =
-
-      "Latitude: " +
-      currentLatitude.toFixed(6) +
-
-      "<br>" +
-
-      "Longitude: " +
-      currentLongitude.toFixed(6) +
-
-      "<br>" +
-
-      "Accuracy: " +
-
-      (
-        currentAccuracy !== null
-          ? currentAccuracy.toFixed(1)
-          : "N/A"
-      ) +
-
-      " meters";
-
-  } else {
-
-    data.textContent =
-      "Please wait for GPS location...";
-
-  }
-
-}
-
-
-
-/* ============================================================
-   FILE TO DATA URL
-   ============================================================ */
-
-function fileToDataURL(file) {
-
   return new Promise(
-    (resolve, reject) => {
+    function(resolve, reject) {
 
       const reader =
         new FileReader();
 
 
       reader.onload =
-        () =>
-          resolve(
-            reader.result
-          );
+        function(event) {
+
+          const img =
+            new Image();
+
+
+          img.onload =
+            function() {
+
+              const canvas =
+                document.createElement(
+                  "canvas"
+                );
+
+
+              let width =
+                img.width;
+
+              let height =
+                img.height;
+
+
+              const maxWidth =
+                1600;
+
+
+              if (
+                width > maxWidth
+              ) {
+
+                height =
+                  height *
+                  (
+                    maxWidth /
+                    width
+                  );
+
+
+                width =
+                  maxWidth;
+
+              }
+
+
+              canvas.width =
+                width;
+
+
+              canvas.height =
+                height;
+
+
+              const ctx =
+                canvas.getContext(
+                  "2d"
+                );
+
+
+              ctx.drawImage(
+                img,
+                0,
+                0,
+                width,
+                height
+              );
+
+
+              const now =
+                new Date();
+
+
+              const date =
+                now.toLocaleDateString();
+
+
+              const time =
+                now.toLocaleTimeString();
+
+
+              const boxHeight =
+                115;
+
+
+              ctx.fillStyle =
+                "rgba(0,0,0,0.68)";
+
+
+              ctx.fillRect(
+                0,
+                height -
+                  boxHeight,
+                width,
+                boxHeight
+              );
+
+
+              ctx.fillStyle =
+                "#ffffff";
+
+
+              ctx.font =
+                "bold 28px Arial";
+
+
+              ctx.fillText(
+                "DATE: " + date,
+                20,
+                height - 75
+              );
+
+
+              ctx.fillText(
+                "TIME: " + time,
+                20,
+                height - 40
+              );
+
+
+              ctx.font =
+                "22px Arial";
+
+
+              ctx.fillText(
+                "LAT: " +
+                latitude +
+                "  LONG: " +
+                longitude,
+                20,
+                height - 10
+              );
+
+
+              resolve(
+                canvas.toDataURL(
+                  "image/jpeg",
+                  0.85
+                )
+              );
+
+            };
+
+
+          img.onerror =
+            function() {
+
+              reject(
+                new Error(
+                  "Image processing failed."
+                )
+              );
+
+            };
+
+
+          img.src =
+            event.target.result;
+
+        };
 
 
       reader.onerror =
-        () =>
+        function() {
+
           reject(
-            reader.error
+            new Error(
+              "Could not read photo."
+            )
           );
+
+        };
 
 
       reader.readAsDataURL(
@@ -1568,261 +1681,85 @@ function fileToDataURL(file) {
 }
 
 
+/* =====================================================
+   PHOTO PREVIEW
+===================================================== */
 
-/* ============================================================
-   PHOTO STAMP
-   ============================================================ */
-
-async function stampPhoto(
-  file,
-  photoType
+function setupPreview(
+  inputId,
+  previewId
 ) {
 
-  const dataURL =
-    await fileToDataURL(
-      file
+  document
+    .getElementById(inputId)
+    .addEventListener(
+      "change",
+      function() {
+
+        const file =
+          this.files[0];
+
+
+        if (!file) {
+          return;
+        }
+
+
+        const preview =
+          document.getElementById(
+            previewId
+          );
+
+
+        preview.src =
+          URL.createObjectURL(
+            file
+          );
+
+
+        preview.style.display =
+          "block";
+
+      }
     );
-
-
-  const img =
-    new Image();
-
-
-  return new Promise(
-    (resolve, reject) => {
-
-      img.onload =
-        function() {
-
-          const maxWidth =
-            1600;
-
-
-          let width =
-            img.width;
-
-
-          let height =
-            img.height;
-
-
-          if (
-            width > maxWidth
-          ) {
-
-            height =
-              Math.round(
-                height *
-                maxWidth /
-                width
-              );
-
-
-            width =
-              maxWidth;
-
-          }
-
-
-          const canvas =
-            document.createElement(
-              "canvas"
-            );
-
-
-          canvas.width =
-            width;
-
-
-          canvas.height =
-            height;
-
-
-          const ctx =
-            canvas.getContext(
-              "2d"
-            );
-
-
-          ctx.drawImage(
-            img,
-            0,
-            0,
-            width,
-            height
-          );
-
-
-          const now =
-            new Date();
-
-
-          const date =
-            now.toLocaleDateString(
-              "en-GB"
-            );
-
-
-          const time =
-            now.toLocaleTimeString(
-              "en-GB"
-            );
-
-
-          const lat =
-            currentLatitude !== null
-              ? currentLatitude.toFixed(6)
-              : "N/A";
-
-
-          const lng =
-            currentLongitude !== null
-              ? currentLongitude.toFixed(6)
-              : "N/A";
-
-
-          const accuracy =
-            currentAccuracy !== null
-              ? currentAccuracy.toFixed(1) +
-                " m"
-              : "N/A";
-
-
-          const lines = [
-
-            photoType,
-
-            "Date: " + date,
-
-            "Time: " + time,
-
-            "Lat: " + lat,
-
-            "Long: " + lng,
-
-            "Accuracy: " + accuracy
-
-          ];
-
-
-          const fontSize =
-            Math.max(
-              22,
-              Math.round(
-                width * 0.018
-              )
-            );
-
-
-          const lineHeight =
-            fontSize + 8;
-
-
-          const padding =
-            14;
-
-
-          const boxHeight =
-            lines.length *
-            lineHeight +
-            padding * 2;
-
-
-          ctx.fillStyle =
-            "rgba(0,0,0,0.65)";
-
-
-          ctx.fillRect(
-            0,
-            height - boxHeight,
-            width,
-            boxHeight
-          );
-
-
-          ctx.fillStyle =
-            "#ffffff";
-
-
-          ctx.font =
-            "bold " +
-            fontSize +
-            "px Arial";
-
-
-          lines.forEach(
-            (line, index) => {
-
-              ctx.fillText(
-
-                line,
-
-                padding,
-
-                height -
-                boxHeight +
-                padding +
-                fontSize +
-                index *
-                lineHeight
-
-              );
-
-            }
-          );
-
-
-          resolve(
-            canvas.toDataURL(
-              "image/jpeg",
-              0.88
-            )
-          );
-
-        };
-
-
-      img.onerror =
-        () =>
-          reject(
-            new Error(
-              "Unable to process photo."
-            )
-          );
-
-
-      img.src =
-        dataURL;
-
-    }
-  );
 
 }
 
 
+setupPreview(
+  "staffPhoto",
+  "staffPreview"
+);
 
-/* ============================================================
+
+setupPreview(
+  "assemblyPhoto",
+  "assemblyPreview"
+);
+
+
+/* =====================================================
    CREATE SUBMISSION
-   ============================================================ */
+===================================================== */
 
 async function createSubmission() {
 
   const cluster =
     document.getElementById(
       "cluster"
-    ).value.trim();
+    ).value;
 
 
   const school =
     document.getElementById(
       "school"
-    ).value.trim();
+    ).value;
 
 
   const emis =
     document.getElementById(
       "emis"
-    ).value.trim();
+    ).value;
 
 
   const staffFile =
@@ -1867,7 +1804,7 @@ async function createSubmission() {
   if (!staffFile) {
 
     throw new Error(
-      "Please take Staff with PEF/PEIMA Board photo."
+      "Please capture Staff photo."
     );
 
   }
@@ -1876,77 +1813,88 @@ async function createSubmission() {
   if (!assemblyFile) {
 
     throw new Error(
-      "Please take Students Morning Assembly photo."
+      "Please capture Students photo."
     );
 
   }
 
 
-  await captureGPS();
+  /*
+    Fresh GPS is obtained immediately
+    before photo stamping.
+  */
+
+  const gps =
+    await getFreshGPS();
 
 
-  if (
-    currentLatitude === null ||
-    currentLongitude === null
-  ) {
-
-    throw new Error(
-      "GPS location could not be captured."
-    );
-
-  }
+  const latitude =
+    gps.coords.latitude;
 
 
-  const submissionId =
-    Date.now() +
-    "-" +
-    Math.random()
-      .toString(36)
-      .substring(2, 10);
+  const longitude =
+    gps.coords.longitude;
+
+
+  const capturedAt =
+    new Date().toISOString();
 
 
   const staffPhoto =
     await stampPhoto(
       staffFile,
-      "Staff with PEF / PEIMA Board"
+      latitude,
+      longitude
     );
 
 
   const assemblyPhoto =
     await stampPhoto(
       assemblyFile,
-      "Students Morning Assembly"
+      latitude,
+      longitude
     );
 
 
   return {
 
     submissionId:
-      submissionId,
 
-    captureDate:
-      new Date().toISOString(),
+      "SUB-" +
+      Date.now() +
+      "-" +
+      Math.random()
+        .toString(36)
+        .substring(2, 9),
+
+
+    capturedAt:
+      capturedAt,
+
 
     cluster:
       cluster,
 
+
     school:
       school,
+
 
     emis:
       emis,
 
+
     latitude:
-      currentLatitude,
+      latitude,
+
 
     longitude:
-      currentLongitude,
+      longitude,
 
-    accuracy:
-      currentAccuracy,
 
     staffPhoto:
       staffPhoto,
+
 
     assemblyPhoto:
       assemblyPhoto
@@ -1956,10 +1904,9 @@ async function createSubmission() {
 }
 
 
-
-/* ============================================================
+/* =====================================================
    SUBMIT
-   ============================================================ */
+===================================================== */
 
 async function submitForm() {
 
@@ -1969,16 +1916,11 @@ async function submitForm() {
     );
 
 
-  if (button.disabled) {
-    return;
-  }
-
-
-  button.disabled =
-    true;
-
-
   try {
+
+    button.disabled =
+      true;
+
 
     button.textContent =
       "Getting GPS...";
@@ -1988,125 +1930,93 @@ async function submitForm() {
       await createSubmission();
 
 
-    /*
-     * ONLY genuinely offline:
-     * automatically create draft.
-     */
-
-    if (!navigator.onLine) {
-
-      await saveDraftToDB(
-        submission
-      );
-
-
-      await updatePendingCount();
-
-
-      alert(
-        "Internet connection nahi hai.\n\n" +
-        "Data Draft mein save ho gaya hai."
-      );
-
-
-      clearForm();
-
-
-      return;
-
-    }
-
-
-    /*
-     * Internet available:
-     * DIRECT SERVER SUBMISSION.
-     */
-
     button.textContent =
       "Submitting...";
 
 
-    try {
+    if (
+      navigator.onLine
+    ) {
 
-      await apiRequestWithRetry(
+      try {
 
-        "saveMonitoring",
+        await apiRequest(
+          "saveMonitoring",
+          submission
+        );
 
-        submission,
 
-        3
+        alert(
+          "Submitted Successfully."
+        );
 
+
+        clearForm();
+
+      }
+
+      catch(error) {
+
+        await dbPut(
+          "drafts",
+          submission
+        );
+
+
+        alert(
+          "Server connection failed.\n\n" +
+          "Your submission has been saved offline and will sync automatically."
+        );
+
+      }
+
+    }
+
+    else {
+
+      await dbPut(
+        "drafts",
+        submission
       );
 
 
       alert(
-        "Monitoring successfully submitted."
-      );
-
-
-      clearForm();
-
-
-      await updatePendingCount();
-
-
-    } catch (serverError) {
-
-      console.error(
-        "Server submission failed:",
-        serverError
-      );
-
-
-      /*
-       * IMPORTANT:
-       * Online user ke data ko automatically
-       * draft nahi banaya jayega.
-       */
-
-      alert(
-
-        "Internet available hai lekin server response nahi de raha.\n\n" +
-
-        "Please thori dair baad Submit Monitoring dobara press karein."
-
+        "You are offline.\n\n" +
+        "Your submission has been saved on this device."
       );
 
     }
 
 
-  } catch (error) {
+    await updatePendingCount();
 
-    console.error(
-      "Submit error:",
-      error
-    );
+  }
 
+  catch(error) {
 
     alert(
-      error.message ||
-      "Unable to submit monitoring."
+      error.message
     );
 
+  }
 
-  } finally {
+  finally {
 
     button.disabled =
       false;
 
 
     button.textContent =
-      "Submit Monitoring";
+      "Submit";
 
   }
 
 }
 
 
-
-/* ============================================================
-   MANUAL DRAFT
-   ============================================================ */
+/* =====================================================
+   SAVE DRAFT
+===================================================== */
 
 async function saveDraft() {
 
@@ -2116,27 +2026,25 @@ async function saveDraft() {
       await createSubmission();
 
 
-    await saveDraftToDB(
+    await dbPut(
+      "drafts",
       submission
+    );
+
+
+    alert(
+      "Draft saved successfully."
     );
 
 
     await updatePendingCount();
 
+  }
+
+  catch(error) {
 
     alert(
-      "Draft successfully saved on this device."
-    );
-
-
-    clearForm();
-
-
-  } catch (error) {
-
-    alert(
-      error.message ||
-      "Unable to save draft."
+      error.message
     );
 
   }
@@ -2144,17 +2052,18 @@ async function saveDraft() {
 }
 
 
-
-/* ============================================================
-   SYNC DRAFTS
-   ============================================================ */
+/* =====================================================
+   SYNC PENDING
+===================================================== */
 
 async function syncDrafts() {
 
-  if (!navigator.onLine) {
+  if (
+    !navigator.onLine
+  ) {
 
     alert(
-      "Internet connection available nahi hai."
+      "Internet connection is not available."
     );
 
     return;
@@ -2163,7 +2072,9 @@ async function syncDrafts() {
 
 
   const drafts =
-    await getDrafts();
+    await dbGetAll(
+      "drafts"
+    );
 
 
   if (
@@ -2171,7 +2082,7 @@ async function syncDrafts() {
   ) {
 
     alert(
-      "No pending drafts found."
+      "No pending uploads."
     );
 
     return;
@@ -2179,9 +2090,8 @@ async function syncDrafts() {
   }
 
 
-  let uploaded = 0;
-
-  let failed = 0;
+  let successCount =
+    0;
 
 
   for (
@@ -2190,34 +2100,28 @@ async function syncDrafts() {
 
     try {
 
-      await apiRequestWithRetry(
-
+      await apiRequest(
         "saveMonitoring",
-
-        draft,
-
-        3
-
+        draft
       );
 
 
-      await deleteDraft(
+      await dbDelete(
+        "drafts",
         draft.submissionId
       );
 
 
-      uploaded++;
+      successCount++;
 
+    }
 
-    } catch (error) {
+    catch(error) {
 
-      console.error(
-        "Draft sync failed:",
+      console.log(
+        "Sync failed:",
         error
       );
-
-
-      failed++;
 
     }
 
@@ -2228,38 +2132,50 @@ async function syncDrafts() {
 
 
   alert(
-
-    "Sync completed.\n\n" +
-
-    "Uploaded: " +
-    uploaded +
-
-    "\n" +
-
-    "Failed: " +
-    failed
-
+    successCount +
+    " submission(s) synced successfully."
   );
 
 }
 
 
+/* =====================================================
+   PENDING COUNT
+===================================================== */
 
-/* ============================================================
+async function updatePendingCount() {
+
+  const drafts =
+    await dbGetAll(
+      "drafts"
+    );
+
+
+  document.getElementById(
+    "pendingCount"
+  ).textContent =
+    "Pending Uploads: " +
+    drafts.length;
+
+}
+
+
+/* =====================================================
    CLEAR FORM
-   ============================================================ */
+===================================================== */
 
 function clearForm() {
 
   document.getElementById(
     "cluster"
-  ).value = "";
+  ).value =
+    "";
 
 
   document.getElementById(
     "school"
   ).innerHTML =
-    '<option value="">Select Cluster First</option>';
+    '<option value="">Select School</option>';
 
 
   document.getElementById(
@@ -2286,115 +2202,60 @@ function clearForm() {
     "";
 
 
-  currentLatitude =
-    null;
+  document.getElementById(
+    "staffPreview"
+  ).style.display =
+    "none";
 
 
-  currentLongitude =
-    null;
+  document.getElementById(
+    "assemblyPreview"
+  ).style.display =
+    "none";
 
 
-  currentAccuracy =
-    null;
-
-
-  updateGPSStatus(
-    "Getting location..."
-  );
-
-
-  setTimeout(
-    () => {
-
-      captureGPS()
-        .catch(
-          error =>
-            console.log(
-              "GPS reset:",
-              error
-            )
-        );
-
-    },
-    500
-  );
+  /*
+    GPS variables ko reset nahi kar rahe,
+    kyun ke watchPosition background mein
+    latest location update karta rahega.
+  */
 
 }
 
 
-
-/* ============================================================
-   PENDING COUNT
-   ============================================================ */
-
-async function updatePendingCount() {
-
-  try {
-
-    const drafts =
-      await getDrafts();
-
-
-    const count =
-      drafts.length;
-
-
-    document.getElementById(
-      "pendingCount"
-    ).textContent =
-      count;
-
-
-    document.getElementById(
-      "pendingBox"
-    ).style.display =
-      count > 0
-        ? "block"
-        : "none";
-
-
-  } catch (error) {
-
-    console.error(
-      "Pending count:",
-      error
-    );
-
-  }
-
-}
-
-
-
-/* ============================================================
+/* =====================================================
    NETWORK STATUS
-   ============================================================ */
+===================================================== */
 
 function updateNetworkStatus() {
 
-  const box =
+  const element =
     document.getElementById(
       "networkStatus"
     );
 
 
-  if (navigator.onLine) {
+  if (
+    navigator.onLine
+  ) {
 
-    box.className =
-      "status-box online";
-
-
-    box.textContent =
-      "🟢 Internet Connected";
-
-  } else {
-
-    box.className =
-      "status-box offline";
+    element.textContent =
+      "🟢 Online";
 
 
-    box.textContent =
-      "🔴 Offline Mode";
+    element.className =
+      "status online";
+
+  }
+
+  else {
+
+    element.textContent =
+      "🔴 Offline - Data will be saved on this device";
+
+
+    element.className =
+      "status offline";
 
   }
 
@@ -2403,11 +2264,13 @@ function updateNetworkStatus() {
 
 window.addEventListener(
   "online",
-  function() {
+  async function() {
 
     updateNetworkStatus();
 
-    updatePendingCount();
+    await syncDrafts();
+
+    await loadMasterData();
 
   }
 );
@@ -2423,10 +2286,13 @@ window.addEventListener(
 );
 
 
-
-/* ============================================================
+/* =====================================================
    PWA INSTALL
-   ============================================================ */
+===================================================== */
+
+let deferredInstallPrompt =
+  null;
+
 
 window.addEventListener(
   "beforeinstallprompt",
@@ -2448,42 +2314,42 @@ window.addEventListener(
 );
 
 
+document
+  .getElementById("installBtn")
+  .addEventListener(
+    "click",
+    async function() {
 
-async function installApp() {
+      if (
+        !deferredInstallPrompt
+      ) {
 
-  if (!deferredInstallPrompt) {
+        return;
 
-    alert(
-      "Install option is not available right now."
-    );
-
-    return;
-
-  }
-
-
-  deferredInstallPrompt.prompt();
+      }
 
 
-  await deferredInstallPrompt.userChoice;
+      deferredInstallPrompt.prompt();
 
 
-  deferredInstallPrompt =
-    null;
+      await deferredInstallPrompt
+        .userChoice;
 
 
-  document.getElementById(
-    "installBtn"
-  ).style.display =
-    "none";
-
-}
+      deferredInstallPrompt =
+        null;
 
 
+      this.style.display =
+        "none";
 
-/* ============================================================
+    }
+  );
+
+
+/* =====================================================
    SERVICE WORKER
-   ============================================================ */
+===================================================== */
 
 if (
   "serviceWorker" in navigator
@@ -2495,22 +2361,21 @@ if (
 
       navigator.serviceWorker
         .register(
-          "./service-worker.js"
+          "service-worker.js"
         )
         .then(
-          registration => {
+          function() {
 
             console.log(
-              "Service Worker registered:",
-              registration.scope
+              "Service Worker registered."
             );
 
           }
         )
         .catch(
-          error => {
+          function(error) {
 
-            console.error(
+            console.log(
               "Service Worker error:",
               error
             );
@@ -2524,10 +2389,9 @@ if (
 }
 
 
-
-/* ============================================================
+/* =====================================================
    START APP
-   ============================================================ */
+===================================================== */
 
 async function startApp() {
 
@@ -2535,26 +2399,24 @@ async function startApp() {
 
     await openDB();
 
-  } catch (error) {
+    updateNetworkStatus();
 
-    console.error(
-      "IndexedDB error:",
+    await loadMasterData();
+
+    startGPSMonitoring();
+
+    await updatePendingCount();
+
+  }
+
+  catch(error) {
+
+    console.log(
+      "App startup error:",
       error
     );
 
   }
-
-
-  updateNetworkStatus();
-
-
-  await updatePendingCount();
-
-
-  await loadMasterData();
-
-
-  startGPSMonitoring();
 
 }
 
