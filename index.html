@@ -1,34 +1,35 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
   <meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
 
-  <meta
-    name="theme-color"
-    content="#0b7a5c"
-  >
+>
 
-  <meta
-    name="description"
-    content="Schools Daily Functionality"
-  >
+<meta
+name="theme-color"
+content="#0b7a5c"
+
+>
+
+<meta
+name="description"
+content="Schools Daily Functionality"
+
+>
 
   <link
     rel="manifest"
     href="manifest.json"
   >
 
-  <title>
-    Schools Daily Functionality
-  </title>
-
+  <title>Schools Daily Functionality</title>
 
   <style>
 
@@ -36,578 +37,385 @@
       box-sizing: border-box;
     }
 
-
     body {
-
       margin: 0;
-
-      font-family:
-        Arial,
-        sans-serif;
-
-      background:
-        #f3f6f5;
-
-      color:
-        #222;
-
+      font-family: Arial, sans-serif;
+      background: #f3f6f5;
+      color: #222;
     }
-
 
     .header {
-
-      background:
-        #0b7a5c;
-
-      color:
-        white;
-
-      padding:
-        18px;
-
-      text-align:
-        center;
-
+      background: #0b7a5c;
+      color: white;
+      padding: 18px;
+      text-align: center;
     }
-
 
     .header h1 {
-
-      margin:
-        0;
-
-      font-size:
-        22px;
-
+      margin: 0;
+      font-size: 22px;
     }
-
 
     .header p {
-
-      margin:
-        6px 0 0;
-
-      font-size:
-        13px;
-
+      margin: 6px 0 0;
+      font-size: 13px;
     }
-
 
     .container {
-
-      max-width:
-        650px;
-
-      margin:
-        auto;
-
-      padding:
-        15px;
-
+      max-width: 650px;
+      margin: auto;
+      padding: 15px;
     }
-
 
     .status {
-
-      padding:
-        10px;
-
-      border-radius:
-        8px;
-
-      margin-bottom:
-        15px;
-
-      text-align:
-        center;
-
-      font-weight:
-        bold;
-
-      font-size:
-        14px;
-
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 14px;
     }
-
 
     .online {
-
-      background:
-        #d9f5e9;
-
-      color:
-        #087447;
-
+      background: #d9f5e9;
+      color: #087447;
     }
-
 
     .offline {
-
-      background:
-        #ffe4e4;
-
-      color:
-        #a00000;
-
+      background: #ffe4e4;
+      color: #a00000;
     }
-
 
     .card {
-
-      background:
-        white;
-
-      border-radius:
-        12px;
-
-      padding:
-        18px;
-
-      margin-bottom:
-        15px;
-
-      box-shadow:
-        0 2px 8px
-        rgba(0,0,0,0.08);
-
+      background: white;
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
-
 
     label {
-
-      display:
-        block;
-
-      margin-top:
-        12px;
-
-      margin-bottom:
-        6px;
-
-      font-weight:
-        bold;
-
-      font-size:
-        14px;
-
+      display: block;
+      margin-top: 12px;
+      margin-bottom: 6px;
+      font-weight: bold;
+      font-size: 14px;
     }
-
 
     select,
     input[type="text"] {
-
-      width:
-        100%;
-
-      padding:
-        12px;
-
-      border:
-        1px solid #ccc;
-
-      border-radius:
-        8px;
-
-      font-size:
-        15px;
-
-      background:
-        white;
-
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+      background: white;
     }
-
 
     input[readonly] {
-
-      background:
-        #eeeeee;
-
+      background: #eeeeee;
     }
-
 
     .photo-box {
-
-      border:
-        2px dashed #bbb;
-
-      border-radius:
-        10px;
-
-      padding:
-        15px;
-
-      margin-top:
-        15px;
-
-      text-align:
-        center;
-
+      border: 2px dashed #bbb;
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 15px;
+      text-align: center;
     }
-
 
     .photo-box strong {
-
-      display:
-        block;
-
-      margin-bottom:
-        10px;
-
+      display: block;
+      margin-bottom: 10px;
     }
-
 
     input[type="file"] {
-
-      width:
-        100%;
-
+      width: 100%;
     }
-
 
     .preview {
-
-      width:
-        100%;
-
-      max-height:
-        350px;
-
-      object-fit:
-        contain;
-
-      margin-top:
-        12px;
-
-      border-radius:
-        8px;
-
-      display:
-        none;
-
+      width: 100%;
+      max-height: 350px;
+      object-fit: contain;
+      margin-top: 12px;
+      border-radius: 8px;
+      display: none;
     }
-
 
     button {
-
-      width:
-        100%;
-
-      border:
-        none;
-
-      border-radius:
-        9px;
-
-      padding:
-        13px;
-
-      margin-top:
-        10px;
-
-      font-size:
-        15px;
-
-      font-weight:
-        bold;
-
-      cursor:
-        pointer;
-
+      width: 100%;
+      border: none;
+      border-radius: 9px;
+      padding: 13px;
+      margin-top: 10px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
     }
 
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
 
     .primary {
-
-      background:
-        #0b7a5c;
-
-      color:
-        white;
-
+      background: #0b7a5c;
+      color: white;
     }
-
 
     .secondary {
-
-      background:
-        #e8eeee;
-
-      color:
-        #164d40;
-
+      background: #e8eeee;
+      color: #164d40;
     }
-
 
     .install {
-
-      background:
-        #1559a6;
-
-      color:
-        white;
-
-      display:
-        none;
-
+      background: #1559a6;
+      color: white;
+      display: none;
     }
-
 
     .gps {
-
-      background:
-        #eef7ff;
-
-      padding:
-        10px;
-
-      border-radius:
-        8px;
-
-      margin-top:
-        12px;
-
-      font-size:
-        13px;
-
+      background: #eef7ff;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 12px;
+      font-size: 13px;
+      line-height: 1.6;
     }
 
+    .gps-success {
+      background: #d9f5e9;
+      color: #087447;
+    }
+
+    .gps-error {
+      background: #ffe4e4;
+      color: #a00000;
+    }
+
+    .gps-loading {
+      background: #fff4d6;
+      color: #8a5a00;
+    }
 
     .pending {
-
-      text-align:
-        center;
-
-      font-weight:
-        bold;
-
-      margin-top:
-        10px;
-
-      color:
-        #b05a00;
-
+      text-align: center;
+      font-weight: bold;
+      margin-top: 10px;
+      color: #b05a00;
     }
 
-
     .info {
-
-      font-size:
-        13px;
-
-      color:
-        #555;
-
-      margin-top:
-        8px;
-
-      line-height:
-        1.5;
-
+      font-size: 13px;
+      color: #555;
+      margin-top: 8px;
+      line-height: 1.5;
     }
 
   </style>
 
 </head>
 
-
 <body>
-
 
   <div class="header">
 
-    <h1>
-      Schools Daily Functionality
-    </h1>
+```
+<h1>
+  Schools Daily Functionality
+</h1>
 
-    <p>
-      PEF / PEIMA
-    </p>
+<p>
+  PEF / PEIMA
+</p>
+```
 
   </div>
-
 
   <div class="container">
 
+```
+<div
+  id="networkStatus"
+  class="status online"
+>
+  Checking connection...
+</div>
 
-    <div
-      id="networkStatus"
-      class="status online"
-    >
-      Checking connection...
+
+<div class="card">
+
+
+  <label>
+    Cluster
+  </label>
+
+  <select id="cluster">
+
+    <option value="">
+      Loading clusters...
+    </option>
+
+  </select>
+
+
+  <label>
+    School
+  </label>
+
+  <select
+    id="school"
+    disabled
+  >
+
+    <option value="">
+      Select Cluster First
+    </option>
+
+  </select>
+
+
+  <label>
+    EMIS Code
+  </label>
+
+  <input
+    type="text"
+    id="emis"
+    readonly
+  >
+
+
+  <div
+    id="gpsBox"
+    class="gps gps-loading"
+  >
+
+    <strong>
+      GPS Location
+    </strong>
+
+    <div id="gpsStatus">
+      Getting location...
     </div>
-
-
-    <div class="card">
-
-
-      <label>
-        Cluster
-      </label>
-
-      <select id="cluster">
-
-        <option value="">
-          Loading clusters...
-        </option>
-
-      </select>
-
-
-      <label>
-        School
-      </label>
-
-      <select
-        id="school"
-        disabled
-      >
-
-        <option value="">
-          Select Cluster First
-        </option>
-
-      </select>
-
-
-      <label>
-        EMIS Code
-      </label>
-
-      <input
-        type="text"
-        id="emis"
-        readonly
-      >
-
-
-      <div class="gps">
-
-        <strong>
-          GPS Location
-        </strong>
-
-        <div id="gpsStatus">
-          Getting location...
-        </div>
-
-      </div>
-
-
-    </div>
-
-
-    <div class="card">
-
-
-      <div class="photo-box">
-
-        <strong>
-          1. Staff with PEF/PEIMA Board
-        </strong>
-
-        <input
-          type="file"
-          id="staffPhoto"
-          accept="image/*"
-          capture="environment"
-        >
-
-        <img
-          id="staffPreview"
-          class="preview"
-        >
-
-      </div>
-
-
-      <div class="photo-box">
-
-        <strong>
-          2. Students Morning Assembly
-        </strong>
-
-        <input
-          type="file"
-          id="assemblyPhoto"
-          accept="image/*"
-          capture="environment"
-        >
-
-        <img
-          id="assemblyPreview"
-          class="preview"
-        >
-
-      </div>
-
-
-      <div class="info">
-
-        Photo will contain
-        Date, Time, Latitude and Longitude.
-
-      </div>
-
-
-    </div>
-
-
-    <div class="card">
-
-
-      <button
-        id="submitBtn"
-        class="primary"
-        onclick="submitForm()"
-      >
-        Submit
-      </button>
-
-
-      <button
-        class="secondary"
-        onclick="saveDraft()"
-      >
-        Save Draft
-      </button>
-
-
-      <button
-        class="secondary"
-        onclick="syncDrafts()"
-      >
-        Sync Pending Uploads
-      </button>
-
-
-      <button
-        id="installBtn"
-        class="install"
-      >
-        Install App
-      </button>
-
-
-      <div
-        id="pendingCount"
-        class="pending"
-      >
-        Pending Uploads: 0
-      </div>
-
-
-    </div>
-
 
   </div>
 
+
+</div>
+
+
+<div class="card">
+
+
+  <div class="photo-box">
+
+    <strong>
+      1. Staff with PEF/PEIMA Board
+    </strong>
+
+    <input
+      type="file"
+      id="staffPhoto"
+      accept="image/*"
+      capture="environment"
+    >
+
+    <img
+      id="staffPreview"
+      class="preview"
+    >
+
+  </div>
+
+
+  <div class="photo-box">
+
+    <strong>
+      2. Students Morning Assembly
+    </strong>
+
+    <input
+      type="file"
+      id="assemblyPhoto"
+      accept="image/*"
+      capture="environment"
+    >
+
+    <img
+      id="assemblyPreview"
+      class="preview"
+    >
+
+  </div>
+
+
+  <div class="info">
+
+    Photo will contain
+    Date, Time, Latitude, Longitude
+    and GPS Accuracy.
+
+  </div>
+
+
+</div>
+
+
+<div class="card">
+
+
+  <button
+    id="submitBtn"
+    class="primary"
+    onclick="submitForm()"
+  >
+    Submit
+  </button>
+
+
+  <button
+    class="secondary"
+    onclick="saveDraft()"
+  >
+    Save Draft
+  </button>
+
+
+  <button
+    class="secondary"
+    onclick="syncDrafts()"
+  >
+    Sync Pending Uploads
+  </button>
+
+
+  <button
+    id="installBtn"
+    class="install"
+  >
+    Install App
+  </button>
+
+
+  <div
+    id="pendingCount"
+    class="pending"
+  >
+    Pending Uploads: 0
+  </div>
+
+
+</div>
+```
+
+  </div>
 
 <script>
 
 
 /* =====================================================
-   IMPORTANT:
-   APPS SCRIPT WEB APP URL YAHAN PASTE KAREN
+   APPS SCRIPT WEB APP URL
 ===================================================== */
 
 const API_URL =
@@ -622,6 +430,21 @@ const DB_NAME =
   "SchoolsDailyFunctionalityDB";
 
 let db;
+
+
+/* =====================================================
+   GPS VARIABLES
+===================================================== */
+
+let currentLatitude = "";
+
+let currentLongitude = "";
+
+let currentAccuracy = "";
+
+let gpsWatchId = null;
+
+let gpsRetryTimer = null;
 
 
 /* =====================================================
@@ -724,15 +547,12 @@ function dbPut(
           "readwrite"
         );
 
-
       const store =
         transaction.objectStore(
           storeName
         );
 
-
       store.put(data);
-
 
       transaction.oncomplete =
         function() {
@@ -740,7 +560,6 @@ function dbPut(
           resolve();
 
         };
-
 
       transaction.onerror =
         function() {
@@ -774,16 +593,13 @@ function dbGetAll(
           "readonly"
         );
 
-
       const store =
         transaction.objectStore(
           storeName
         );
 
-
       const request =
         store.getAll();
-
 
       request.onsuccess =
         function() {
@@ -793,7 +609,6 @@ function dbGetAll(
           );
 
         };
-
 
       request.onerror =
         function() {
@@ -828,15 +643,12 @@ function dbDelete(
           "readwrite"
         );
 
-
       const store =
         transaction.objectStore(
           storeName
         );
 
-
       store.delete(key);
-
 
       transaction.oncomplete =
         function() {
@@ -844,7 +656,6 @@ function dbDelete(
           resolve();
 
         };
-
 
       transaction.onerror =
         function() {
@@ -1209,17 +1020,18 @@ document
 
 
 /* =====================================================
-   GPS
+   GPS UI
 ===================================================== */
 
-let currentLatitude =
-  "";
+function setGPSStatus(
+  message,
+  type
+) {
 
-let currentLongitude =
-  "";
-
-
-function getGPS() {
+  const box =
+    document.getElementById(
+      "gpsBox"
+    );
 
   const status =
     document.getElementById(
@@ -1227,67 +1039,320 @@ function getGPS() {
     );
 
 
+  box.className =
+    "gps " +
+    type;
+
+
+  status.innerHTML =
+    message;
+
+}
+
+
+/* =====================================================
+   CAPTURE GPS
+===================================================== */
+
+function captureGPS() {
+
+  return new Promise(
+    function(resolve, reject) {
+
+      if (
+        !navigator.geolocation
+      ) {
+
+        setGPSStatus(
+          "GPS is not supported by this device/browser.",
+          "gps-error"
+        );
+
+        reject(
+          new Error(
+            "GPS is not supported by this device/browser."
+          )
+        );
+
+        return;
+
+      }
+
+
+      setGPSStatus(
+        "Getting precise GPS location...<br>Please wait.",
+        "gps-loading"
+      );
+
+
+      let finished =
+        false;
+
+
+      function success(position) {
+
+        if (finished) {
+          return;
+        }
+
+
+        finished = true;
+
+
+        currentLatitude =
+          position.coords.latitude;
+
+
+        currentLongitude =
+          position.coords.longitude;
+
+
+        currentAccuracy =
+          position.coords.accuracy;
+
+
+        const accuracy =
+          Number(
+            currentAccuracy
+          ).toFixed(1);
+
+
+        setGPSStatus(
+
+          "🟢 Location Captured<br>" +
+
+          "LAT: " +
+          currentLatitude +
+          "<br>" +
+
+          "LONG: " +
+          currentLongitude +
+          "<br>" +
+
+          "Accuracy: " +
+          accuracy +
+          " meters",
+
+          "gps-success"
+
+        );
+
+
+        resolve({
+
+          latitude:
+            currentLatitude,
+
+          longitude:
+            currentLongitude,
+
+          accuracy:
+            currentAccuracy
+
+        });
+
+      }
+
+
+      function failure(error) {
+
+        if (finished) {
+          return;
+        }
+
+
+        finished = true;
+
+
+        let message =
+          "GPS location could not be captured.";
+
+
+        if (
+          error.code ===
+          error.PERMISSION_DENIED
+        ) {
+
+          message =
+            "Location permission was denied.<br>" +
+            "Please allow Location permission for this website/app.";
+
+        }
+
+        else if (
+          error.code ===
+          error.POSITION_UNAVAILABLE
+        ) {
+
+          message =
+            "Location is currently unavailable.<br>" +
+            "Please turn ON phone Location/GPS and try again.";
+
+        }
+
+        else if (
+          error.code ===
+          error.TIMEOUT
+        ) {
+
+          message =
+            "GPS request timed out.<br>" +
+            "Please move to an open area and try again.";
+
+        }
+
+
+        setGPSStatus(
+          "🔴 " + message,
+          "gps-error"
+        );
+
+
+        reject(
+          new Error(
+            "GPS location could not be captured. " +
+            "Please make sure phone Location/GPS is ON and browser permission is allowed."
+          )
+        );
+
+      }
+
+
+      navigator.geolocation.getCurrentPosition(
+        success,
+        failure,
+        {
+
+          enableHighAccuracy:
+            true,
+
+          timeout:
+            45000,
+
+          maximumAge:
+            0
+
+        }
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   START GPS MONITORING
+===================================================== */
+
+function startGPSMonitoring() {
+
   if (
     !navigator.geolocation
   ) {
 
-    status.textContent =
-      "GPS is not supported.";
+    setGPSStatus(
+      "GPS is not supported.",
+      "gps-error"
+    );
 
     return;
 
   }
 
 
-  status.textContent =
-    "Getting GPS location...";
+  captureGPS()
+    .catch(
+      function(error) {
+
+        console.log(
+          "Initial GPS:",
+          error
+        );
+
+      }
+    );
 
 
-  navigator.geolocation.getCurrentPosition(
+  if (
+    gpsWatchId !== null
+  ) {
 
-    function(position) {
+    navigator.geolocation.clearWatch(
+      gpsWatchId
+    );
 
-      currentLatitude =
-        position.coords.latitude;
-
-
-      currentLongitude =
-        position.coords.longitude;
+  }
 
 
-      status.innerHTML =
-        "Location captured<br>" +
-        "LAT: " +
-        currentLatitude +
-        "<br>" +
-        "LONG: " +
-        currentLongitude;
+  gpsWatchId =
+    navigator.geolocation.watchPosition(
 
-    },
+      function(position) {
 
-    function(error) {
+        currentLatitude =
+          position.coords.latitude;
 
-      status.textContent =
-        "GPS permission/location unavailable.";
 
-      console.log(error);
+        currentLongitude =
+          position.coords.longitude;
 
-    },
 
-    {
+        currentAccuracy =
+          position.coords.accuracy;
 
-      enableHighAccuracy:
-        true,
 
-      timeout:
-        15000,
+        const accuracy =
+          Number(
+            currentAccuracy
+          ).toFixed(1);
 
-      maximumAge:
-        0
 
-    }
+        setGPSStatus(
 
-  );
+          "🟢 Location Captured<br>" +
+
+          "LAT: " +
+          currentLatitude +
+          "<br>" +
+
+          "LONG: " +
+          currentLongitude +
+          "<br>" +
+
+          "Accuracy: " +
+          accuracy +
+          " meters",
+
+          "gps-success"
+
+        );
+
+      },
+
+      function(error) {
+
+        console.log(
+          "GPS watch error:",
+          error
+        );
+
+      },
+
+      {
+
+        enableHighAccuracy:
+          true,
+
+        timeout:
+          45000,
+
+        maximumAge:
+          10000
+
+      }
+
+    );
 
 }
 
@@ -1299,7 +1364,8 @@ function getGPS() {
 function stampPhoto(
   file,
   latitude,
-  longitude
+  longitude,
+  accuracy
 ) {
 
   return new Promise(
@@ -1328,7 +1394,6 @@ function stampPhoto(
               let width =
                 img.width;
 
-
               let height =
                 img.height;
 
@@ -1338,7 +1403,8 @@ function stampPhoto(
 
 
               if (
-                width > maxWidth
+                width >
+                maxWidth
               ) {
 
                 height =
@@ -1347,7 +1413,6 @@ function stampPhoto(
                     maxWidth /
                     width
                   );
-
 
                 width =
                   maxWidth;
@@ -1391,11 +1456,11 @@ function stampPhoto(
 
 
               const boxHeight =
-                115;
+                145;
 
 
               ctx.fillStyle =
-                "rgba(0,0,0,0.68)";
+                "rgba(0,0,0,0.72)";
 
 
               ctx.fillRect(
@@ -1416,16 +1481,20 @@ function stampPhoto(
 
 
               ctx.fillText(
-                "DATE: " + date,
+                "DATE: " +
+                date,
                 20,
-                height - 75
+                height -
+                  105
               );
 
 
               ctx.fillText(
-                "TIME: " + time,
+                "TIME: " +
+                time,
                 20,
-                height - 40
+                height -
+                  70
               );
 
 
@@ -1435,11 +1504,24 @@ function stampPhoto(
 
               ctx.fillText(
                 "LAT: " +
-                latitude +
-                "  LONG: " +
-                longitude,
+                latitude,
                 20,
-                height - 10
+                height -
+                  38
+              );
+
+
+              ctx.fillText(
+                "LONG: " +
+                longitude +
+                "  ACC: " +
+                Number(
+                  accuracy
+                ).toFixed(1) +
+                "m",
+                20,
+                height -
+                  10
               );
 
 
@@ -1631,13 +1713,26 @@ async function createSubmission() {
   }
 
 
-  if (
-    currentLatitude === "" ||
-    currentLongitude === ""
-  ) {
+  /* ===================================================
+     FRESH GPS BEFORE SUBMISSION
+  =================================================== */
+
+  let gps;
+
+
+  try {
+
+    gps =
+      await captureGPS();
+
+  }
+
+  catch(error) {
 
     throw new Error(
-      "GPS location is required."
+      "Submission stopped.\n\n" +
+      "Fresh GPS location could not be captured.\n" +
+      "Please turn ON Location/GPS and allow location permission, then try again."
     );
 
   }
@@ -1650,16 +1745,18 @@ async function createSubmission() {
   const staffPhoto =
     await stampPhoto(
       staffFile,
-      currentLatitude,
-      currentLongitude
+      gps.latitude,
+      gps.longitude,
+      gps.accuracy
     );
 
 
   const assemblyPhoto =
     await stampPhoto(
       assemblyFile,
-      currentLatitude,
-      currentLongitude
+      gps.latitude,
+      gps.longitude,
+      gps.accuracy
     );
 
 
@@ -1692,11 +1789,15 @@ async function createSubmission() {
 
 
     latitude:
-      currentLatitude,
+      gps.latitude,
 
 
     longitude:
-      currentLongitude,
+      gps.longitude,
+
+
+    accuracy:
+      gps.accuracy,
 
 
     staffPhoto:
@@ -1730,11 +1831,15 @@ async function submitForm() {
 
 
     button.textContent =
-      "Processing...";
+      "Getting GPS...";
 
 
     const submission =
       await createSubmission();
+
+
+    button.textContent =
+      "Submitting...";
 
 
     if (
@@ -1755,7 +1860,6 @@ async function submitForm() {
 
 
         clearForm();
-
 
       }
 
@@ -2017,6 +2121,38 @@ function clearForm() {
   ).style.display =
     "none";
 
+
+  /* Keep GPS active after form reset */
+
+  if (
+    currentLatitude &&
+    currentLongitude
+  ) {
+
+    setGPSStatus(
+
+      "🟢 Location Captured<br>" +
+
+      "LAT: " +
+      currentLatitude +
+      "<br>" +
+
+      "LONG: " +
+      currentLongitude +
+      "<br>" +
+
+      "Accuracy: " +
+      Number(
+        currentAccuracy
+      ).toFixed(1) +
+      " meters",
+
+      "gps-success"
+
+    );
+
+  }
+
 }
 
 
@@ -2065,9 +2201,14 @@ window.addEventListener(
 
     updateNetworkStatus();
 
+
     await syncDrafts();
 
+
     await loadMasterData();
+
+
+    startGPSMonitoring();
 
   }
 );
@@ -2196,11 +2337,17 @@ async function startApp() {
 
     await openDB();
 
+
     updateNetworkStatus();
+
 
     await loadMasterData();
 
-    getGPS();
+
+    /* Start improved GPS system */
+
+    startGPSMonitoring();
+
 
     await updatePendingCount();
 
